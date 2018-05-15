@@ -43,7 +43,8 @@
    *
    ****************************************************************************/
 
-  document.getElementById('butOnOff').addEventListener('click', function() {
+  document.querySelector('.butOnOff').addEventListener('click', function() {
+    console.log('lsdhjf');
     if (cam_status) {
       cam_status = false;
     }
@@ -52,5 +53,30 @@
     }
     cam_start(cam_status);
   });
-  document.getElementById('butUser').addEventListener('click', function() {
+
+  document.querySelector('.butUser').addEventListener('click', function() {
   });
+
+
+function updateConnectionIcon(status) {
+  if (status) {
+    document.querySelector('.ConnectionIcon').innerHTML = 'signal_cellular_4_bar';
+  }
+  else {
+    document.querySelector('.ConnectionIcon').innerHTML = 'signal_cellular_off';
+  }
+}
+if (navigator.onLine) {
+  updateConnectionIcon(true);
+} else {
+  updateConnectionIcon(false);
+}
+window.addEventListener('offline', function(e) { 
+  console.log('offline');
+  updateConnectionIcon(false);
+
+});
+window.addEventListener('online', function(e) { 
+  console.log('online'); 
+  updateConnectionIcon(true);
+});

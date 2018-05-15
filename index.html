@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>eTicket</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="styles/material.min.css">
+    <link rel="stylesheet" href="styles/inline.css">
     <script defer src="scripts/material.min.js"></script>
 
     <link rel="manifest" href="manifest.json">  
@@ -17,20 +18,18 @@
     <header class="mdl-layout__header mdl-color--grey-900">
       <div class="mdl-layout__header-row">
         <!-- Title -->
-        <span class="mdl-layout-title">Title</span>
+        <span class="mdl-layout-title">eTicket</span>
         <!-- Add spacer, to align navigation to the right -->
         <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
+        <a class="mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50 ConnectionIcon">signal_cellular_null</i></a>
+        <a class="butUser mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50">face</i></a>
+      <!-- Navigation. We hide it in small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50">face</i></a>
         </nav>
       </div>
     </header>
     <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Title</span>
+      <span class="mdl-layout-title">eTicket</span>
       <nav class="mdl-navigation">
         <a class="mdl-navigation__link" href="">Link</a>
         <a class="mdl-navigation__link" href="">Link</a>
@@ -39,8 +38,20 @@
       </nav>
     </div>
     <main class="mdl-layout__content">
-      <div class="page-content"><!-- Your content goes here --></div>
+      <div class="page-content">
+          <video id="preview"></video>
+          <button class="butOnOff mdl-button mdl-js-button mdl-button--fab mdl-button--colored"><i class="material-icons">videocam</i></button>
+      </div>
     </main>
 </div>    
+
+
+<script src="scripts/instascan.min.js"></script>
+<script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+
+<script src="scripts/dbsync.js"></script>
+<!-- <script src="scripts/db2.js"></script> -->
+<script src="scripts/app.js"></script>
+
 </body>
 </html>
