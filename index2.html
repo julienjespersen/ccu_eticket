@@ -5,69 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body {
-            margin: 0em;
-            padding: 0em;
-        }
-
-        section {
-            grid-area: content;
-            position: relative;
-        }
-
-        header {
-            grid-area: header;
-        }
-
-        footer {
-            grid-area: footer;
-        }
-
-        .container {
-            display: grid;
-            grid-gap: 10px;
-            grid-template-columns: 1fr auto 1fr;
-            grid-template-rows: 2em auto 2em;
-            grid-template-areas:
-            "header  header  header"
-            "content content content"
-            "footer  footer  footer";
-            width: 100vw;
-            height: 100vh;
-            background-color: #fff;
-            color: #444;
-        }
-
-
-
-
-        header {
-            position: fixed;
-            background-color: black;
-        }
-        section {
-            background-color: beige;
-        }
-        footer {
-            background-color: darkgreen;
-        }
-    
-    
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="styles/material.min.css">
+    <script defer src="scripts/material.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            header
-        </header>
-        <section>
-            content
-        </section>
-        <footer>
-            footer
-        </footer>
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-color--grey-900">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Title</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50">face</i></a>
+        </nav>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Title</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
     </div>
-    
+    <main class="mdl-layout__content">
+      <div class="page-content"><!-- Your content goes here --></div>
+    </main>
+</div>    
 </body>
 </html>
