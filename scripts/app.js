@@ -57,6 +57,8 @@
   document.querySelector('.butUser').addEventListener('click', function() {
   });
 
+  document.querySelector('.ButtonPower').addEventListener('click', AppOnOff());
+
 
 function updateConnectionIcon(status) {
   if (status) {
@@ -80,3 +82,50 @@ window.addEventListener('online', function(e) {
   console.log('online'); 
   updateConnectionIcon(true);
 });
+
+var nIntervId;
+ 
+function changeColor() {
+  nIntervId = setInterval(flashText, 1000);
+}
+
+function flashText() {
+  var oElem = document.getElementById('my_box');
+  oElem.style.color = oElem.style.color == 'red' ? 'blue' : 'red';
+  // oElem.style.color == 'red' ? 'blue' : 'red' is a ternary operator.
+}
+
+function stopTextColor() {
+  clearInterval(nIntervId);
+}
+
+function AppOnOff() {
+  if(!localStorage.getItem('app_state')) {
+    localStorage.setItem('app_state', 0);
+  }
+  if(localStorage.getItem('app_state')) {
+    // AppTimer(false);
+    // AppCam(false);
+    // AppConnect(false);
+    // AppButtons(false);
+    localStorage.setItem('app_state', 0);
+  }
+  else {
+    // AppTimer(true);
+    // AppCam(true);
+    // AppConnect(true);
+    // AppButtons(true);
+    localStorage.setItem('app_state', 1);
+  }
+}
+
+function AppButtons(param) {
+  if(param) {
+    document.querySelector('.sec-btn').dislpay = 'bloc';
+  }
+  else {
+    document.querySelector('.sec-btn').dislpay = 'none';
+  }
+}
+
+window.addEventListener("load", AppOnOff());

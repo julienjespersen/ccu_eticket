@@ -18,14 +18,21 @@
     <header class="mdl-layout__header mdl-color--grey-900">
       <div class="mdl-layout__header-row">
         <!-- Title -->
-        <span class="mdl-layout-title">eTicket</span>
+        <span class="mdl-layout-title">🤘🏻 eTicket</span>
         <!-- Add spacer, to align navigation to the right -->
         <div class="mdl-layout-spacer"></div>
-        <a class="mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50 ConnectionIcon">signal_cellular_null</i></a>
-        <a class="butUser mdl-navigation__link" href=""><i class="material-icons mdl-color-text--grey-50">face</i></a>
-      <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-        </nav>
+        <button class="mdl-button mdl-js-button mdl-button--icon sec-btn butUser">
+            <i class="material-icons mdl-color-text--grey-50">account_circle</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon sec-btn">
+            <i class="material-icons mdl-color-text--grey-50 ConnectionIcon">signal_cellular_null</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon sec-btn">
+            <i class="material-icons mdl-color-text--grey-50">cloud_queue</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon ButtonPower">
+            <i class="material-icons mdl-color-text--grey-50">power_settings_new</i>
+        </button>
       </div>
     </header>
     <div class="mdl-layout__drawer">
@@ -37,10 +44,12 @@
         <a class="mdl-navigation__link" href="">Link</a>
       </nav>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-          <video id="preview"></video>
-          <button class="butOnOff mdl-button mdl-js-button mdl-button--fab mdl-button--colored"><i class="material-icons">videocam</i></button>
+    <main class="mdl-layout__content mdl-color--grey-700">
+      <div class="mdl-grid center-items">
+                <video id="preview"class="mdl-cell mdl-cell--12-col"></video>
+                <button class="butOnOff mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-cell mdl-cell--1-col">
+                  <i class="material-icons">videocam</i>
+                </button>
       </div>
     </main>
 </div>    

@@ -1,12 +1,20 @@
 .butOnOff {
   position: fixed;
-  left: 47vw;
-  top: 47vh;
+  top: 33%;
   z-index: 10;
 }
 #preview {
   position: fixed;
-  margin: auto auto;
 
   z-index: 9;  
+}
+.mdl-button--icon {
+  margin-left: .5em;
+}
+
+.mdl-grid.center-items {
+  justify-content: center;
+}
+.demo-card-wide.mdl-card {
+  width: 100%;
 }
