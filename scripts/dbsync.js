@@ -1,9 +1,11 @@
+var db = new Dexie("eticket");
+db.version(1).stores({
+    tickets: '++code'
+});
+
+
 function db_synchro(data) {
     
-    var db = new Dexie("eticket");
-    db.version(1).stores({
-        tickets: 'id_ticket'
-    });
 
     db.tickets.bulkPut(data.data).then(function(lastKey) {
         console.log('done: ' + lastKey); 
@@ -11,19 +13,29 @@ function db_synchro(data) {
         console.error ('error while injecting into db');
     });
 
+}
+
+function fetch_record(code) {
+    let tmp = db.tickets.get(code);
 
 
+    db.tickets
+    .where('code')
+    .equals(code)
+    .first()
+    .then(function (ticket) {
+        console.log(ticket);
+    });
 
-    // db.tickets.bulkPut(data).then(function(lastKey) {
-    //     console.log("Done putting 100,000 raindrops all over the place");
-    //     console.log("Last raindrop's id was: " + lastKey); // Will be 100000.
-    // }).catch(Dexie.BulkError, function (e) {
-    //     // Explicitely catching the bulkAdd() operation makes those successful
-    //     // additions commit despite that there were errors.
-    //     console.error ("Some raindrops did not succeed. However, " +
-    //        100-e.failures.length + " raindrops was added successfully");
-    // });
-          
+
+    // console.log(tmp);
+    if (tmp) {
+        return true;
+    }
+    else {
+        return false;
+    }
+    // return db.tickets.get(code);
 }
 
 // function to fetch and feed content from and to the rest api 

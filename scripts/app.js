@@ -2,7 +2,14 @@
   let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
   scanner.addListener('scan', function (content) {
     console.log(content);
-    document.querySelector('pre').innerHTML = content;
+    if (fetch_record(content)) {
+      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed!'});
+    }
+    else {
+      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'NOT'});
+
+    }
+    // document.querySelector('pre').innerHTML = content;
     cam_start(false);
     
   });
@@ -44,7 +51,6 @@
    ****************************************************************************/
 
   document.querySelector('.butOnOff').addEventListener('click', function() {
-    console.log('lsdhjf');
     if (cam_status) {
       cam_status = false;
     }
@@ -128,10 +134,6 @@ function AppButtons(param) {
   }
 }
 
-
-function populateList(data) {
-  console.log(data);
-}
 var domainUrl = 'http://unige.ch/dife/api/v1/tickets/';
 var id_question = 9985;
 	// get all tickets
