@@ -128,4 +128,18 @@ function AppButtons(param) {
   }
 }
 
+
+function populateList(data) {
+  console.log(data);
+}
+var domainUrl = 'http://unige.ch/dife/api/v1/tickets/';
+var id_question = 9985;
+	// get all tickets
+myRequestResponseFunction('GET', domainUrl + id_question, {hello: 'world'}, {TOKEN: 123}, db_synchro);
+
+
+
+
+
+
 window.addEventListener("load", AppOnOff());
