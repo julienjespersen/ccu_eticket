@@ -8,6 +8,24 @@
       console.log(count)
     });
 
+
+
+    function successCallback(result) {
+      console.log("It succeeded with " + result);
+    }
+    
+    function failureCallback(error) {
+      console.log("It failed with " + error);
+    }
+
+
+    doSomething().then(successCallback, failureCallback);
+
+
+
+
+
+
     // if (count_record(content)) {
     //   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed!'});
     // }
