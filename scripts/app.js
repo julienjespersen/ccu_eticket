@@ -1,16 +1,22 @@
 
   let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
   scanner.addListener('scan', function (content) {
-    console.log(content);
-    if (fetch_record(content)) {
-      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed!'});
-    }
-    else {
-      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'NOT'});
-
-    }
-    // document.querySelector('pre').innerHTML = content;
     cam_start(false);
+    console.log(content);
+    // console.log(count_record(content));
+    count_record(content).then(function(count){
+      console.log(count)
+    });
+
+    // if (count_record(content)) {
+    //   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed!'});
+    // }
+    // else {
+    //   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'NOT'});
+
+    // }
+    // document.querySelector('pre').innerHTML = content;
+    // cam_start(false);
     
   });
 
