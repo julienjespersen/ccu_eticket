@@ -1,9 +1,11 @@
 
 let code;
-
+let id_camera;
+let my_camera;
 
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+switch_camera();
 scanner.addListener('scan', function (content) {
   cam_start(false);
   code = content;
@@ -13,6 +15,33 @@ scanner.addListener('scan', function (content) {
 
   
 });
+document.querySelector('.switch-cam').addEventListener('click', switch_camera);
+
+function switch_camera() {
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length == 1) {
+      my_camera = cameras[0];
+      id_camera = cameras[0].id;
+    } 
+    else if (cameras.length == 2) {
+      if (my_camera.id == cameras[1].id) {
+        my_camera = cameras[0];
+      }
+      else {
+        my_camera = cameras[1];
+
+      }
+  
+    }
+    else {
+      console.error('No cameras found.');
+      
+    }
+    });
+    console.log(my_camera);
+
+}
+
 
   function after_count(count) {
     console.log('after count: ' + count);
@@ -20,7 +49,7 @@ scanner.addListener('scan', function (content) {
       fetch_reccord();
     } else {
       document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
-        message: 'NOT',
+        message: 'NOT (unknown)',
         actionHandler: function(event) {
           show_dialog('Unknown code number!', 'This code number doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
         },
@@ -36,7 +65,7 @@ scanner.addListener('scan', function (content) {
     }
     else {
       document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
-        message: 'NOT',
+        message: 'NOT (expired)',
         actionHandler: function(event) {
           show_dialog('Expired ticket!', 'This ticket is no longer valid for this event. Please escort the offender toward the security officer ;)' )
           
@@ -67,28 +96,32 @@ scanner.addListener('scan', function (content) {
 
   function cam_start(StartStop) {
     if(StartStop) {
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-          scanner.start(cameras[0]);
-          var test = scanner.scan();
-          console.log(test);
-        } else {
-          console.error('No cameras found.');
-        }
-      }).catch(function (e) {
-        console.error('ajsdfg');
-        console.error(e);
-        document.querySelector('pre').innerHTML = e;
-      });        
+      scanner.start(my_camera);
+
+      // Instascan.Camera.getCameras().then(function (cameras) {
+      //   if (cameras.length > 0) {
+      //     scanner.start(cameras[0]);
+      //     var test = scanner.scan();
+      //     console.log(test);
+      //   } else {
+      //     console.error('No cameras found.');
+      //   }
+      // }).catch(function (e) {
+      //   console.error('ajsdfg');
+      //   console.error(e);
+      //   document.querySelector('pre').innerHTML = e;
+      // });        
     }
     else {
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
-          scanner.stop(cameras[0]);
-        } else {
-          console.error('No cameras found.');
-        }
-      });        
+      scanner.stop(my_camera);
+      
+      // Instascan.Camera.getCameras().then(function (cameras) {
+      //   if (cameras.length > 0) {
+      //     scanner.stop(cameras[0]);
+      //   } else {
+      //     console.error('No cameras found.');
+      //   }
+      // });        
     }
   }
 
