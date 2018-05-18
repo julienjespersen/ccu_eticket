@@ -51,12 +51,12 @@
     </div>
     <main class="mdl-layout__content mdl-color--grey-700">
       <div class="mdl-grid center-items">
-              <video id="preview"class="mdl-cell mdl-cell--10-col"></video>
-              <div class="mdl-cell mdl-cell--1-col">
-                <button class="butOnOff mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-                  <i class="material-icons">videocam</i>
-                </button>
-              </div>
+        <video id="preview"class="mdl-cell mdl-cell--10-col"></video>
+        <div class="cam-btn-container mdl-cell mdl-cell--1-col">
+          <button class="butOnOff mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+            <i class="material-icons">videocam</i>
+          </button>
+        </div>
       </div>
       <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
         <div class="mdl-snackbar__text"></div>
@@ -64,6 +64,21 @@
       </div>
     </main>
 </div>    
+
+
+
+<dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Allow data collection?</h4>
+    <div class="mdl-dialog__content">
+      <p>
+        Allowing us to collect data will let us get you the information you want faster.
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button close">OK</button>
+    </div>
+  </dialog>
+
 
 
 <script src="scripts/instascan.min.js"></script>

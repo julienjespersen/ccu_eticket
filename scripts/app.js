@@ -1,42 +1,67 @@
 
-  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-  scanner.addListener('scan', function (content) {
-    cam_start(false);
-    console.log(content);
-    // console.log(count_record(content));
-    count_record(content).then(function(count){
-      console.log(count)
+let code;
+
+
+
+let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+scanner.addListener('scan', function (content) {
+  cam_start(false);
+  code = content;
+  console.log(content);
+  // console.log(count_record(content));
+    count_record(content);
+
+  
+});
+
+  function after_count(count) {
+    console.log('after count: ' + count);
+    if (count) {
+      fetch_reccord();
+    } else {
+      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
+        message: 'NOT',
+        actionHandler: function(event) {
+          show_dialog('Unknown code number!', 'This code number doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
+        },
+        actionText: 'Why?',
+        timeout: 10000
+      });
+    }
+  }
+  function after_fetch(reccord_obj) {
+    if(reccord_obj.count_total - reccord_obj.count_stub) {
+      update_reccord(reccord_obj);
+
+    }
+    else {
+      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
+        message: 'NOT',
+        actionHandler: function(event) {
+          show_dialog('Expired ticket!', 'This ticket is no longer valid for this event. Please escort the offender toward the security officer ;)' )
+          
+        },
+        actionText: 'Why?',
+        timeout: 10000
+      });
+    }
+
+
+  }
+
+  function after_update() {
+    document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
+    
+  }
+  function show_dialog(info_title, info_msg) {
+    let dialog = document.querySelector('dialog');
+    dialog.querySelector('h4').innerHTML = info_title;
+    dialog.querySelector('p').innerHTML = info_msg;
+    dialog.showModal();
+    dialog.querySelector('.close').addEventListener('click', function() {
+      dialog.close();
     });
-
-
-
-    function successCallback(result) {
-      console.log("It succeeded with " + result);
-    }
-    
-    function failureCallback(error) {
-      console.log("It failed with " + error);
-    }
-
-
-    doSomething().then(successCallback, failureCallback);
-
-
-
-
-
-
-    // if (count_record(content)) {
-    //   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed!'});
-    // }
-    // else {
-    //   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'NOT'});
-
-    // }
-    // document.querySelector('pre').innerHTML = content;
-    // cam_start(false);
-    
-  });
+  }
 
   let cam_status;
 

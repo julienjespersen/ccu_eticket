@@ -17,25 +17,36 @@ function db_synchro(data) {
 
 function count_record(code) {
 
-	db.tickets.where('code').equals(code).count(function(count){
-		console.log(count);	
-		return count;
-		
-	}).catch(function(e) {
-		console.log(e);
-	});
+	db.tickets.where('code').equals(code).count(after_count);
 
-	// db.tickets
-    // .where('code')
-    // .equals(code)
-    // .first()
-    // .then(function (ticket) {
-	// 	console.log(ticket);
-    //     return true;
-		
-	// });
-	// return false;
 	
+}
+
+function fetch_reccord() {
+	db.tickets
+	.where('code')
+	.equals(code)
+	.first()
+	.then(after_fetch);
+}
+
+
+function update_reccord(reccord_obj) {
+	let new_count = reccord_obj.count_stub + 1;
+	db.tickets
+	.update(code, {
+		count_stub: new_count
+		,date_stub: '2018-05-18 15:00:00'
+	}).then(function (updated) {
+		if (updated) {
+		  console.log ("reccord updated");
+		  after_update;
+		}
+		else {
+			console.log ("not updated");
+
+		}
+	  });
 }
 
 // function to fetch and feed content from and to the rest api 

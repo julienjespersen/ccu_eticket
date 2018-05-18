@@ -1,11 +1,14 @@
 .butOnOff {
   position: fixed;
   top: 33%;
+}
+.cam-btn-container {
   z-index: 10;
+
 }
 #preview {
   position: fixed;
-
+  margin: 0px;
   z-index: 9;  
 }
 .mdl-button--icon {
