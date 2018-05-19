@@ -20,9 +20,6 @@ document.querySelector('.switch-cam').addEventListener('click', switch_camera);
 function switch_camera() {
   Instascan.Camera.getCameras().then(function (cameras) {
     console.log(cameras);
-    document.querySelector('#out_00').innerHTML = cameras[0].name;
-    document.querySelector('#out_01').innerHTML = cameras[1].name;
-    document.querySelector('#out_02').innerHTML = my_camera.name;
     if (cameras.length == 1) {
       my_camera = cameras[0];
       id_camera = cameras[0].id;
@@ -41,7 +38,12 @@ function switch_camera() {
       console.error('No cameras found.');
       
     }
-    });
+    document.querySelector('#out_00').innerHTML = cameras[0].name;
+    if(cameras.length > 1) {
+      document.querySelector('#out_01').innerHTML = cameras[1].name;
+    }
+    document.querySelector('#out_02').innerHTML = my_camera.name;
+  });
     console.log(my_camera);
 
 }
