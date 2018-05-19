@@ -26,7 +26,7 @@
       "scripts": [
         "scripts/app.js",
         "scripts/instascan.min.js",
-        "https://unpkg.com/dexie@latest/dist/dexie.js"
+        "scripts/dexie.min.js"
       ]},
   "start_url": "/index.html",
   "display": "standalone",
