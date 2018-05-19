@@ -22,6 +22,7 @@ function switch_camera() {
     console.log(cameras);
     document.querySelector('#out_00').innerHTML = cameras[0].name;
     document.querySelector('#out_01').innerHTML = cameras[1].name;
+    document.querySelector('#out_02').innerHTML = my_camera.name;
     if (cameras.length == 1) {
       my_camera = cameras[0];
       id_camera = cameras[0].id;
