@@ -17,11 +17,19 @@ scanner.addListener('scan', function (content) {
   
 });
 // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
-document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera());
+document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera_2);
 
 function switch_camera_2() {
   my_camera_i = my_camera_i ? 0 : 1 ;
-  if (my_camera_i)  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+  console.log(my_camera_i);
+  my_camera = cameras[my_camera_i];
+  if (my_camera_i)  {
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
+  }
+  else {
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true });
+    
+  }
   
 }
 
@@ -33,7 +41,6 @@ function switch_camera() {
 
     if(false) {
       my_camera = cameras[0];
-      
     }
     else {
         for (var i = 0; i < cameras.length; i++) {
@@ -44,8 +51,6 @@ function switch_camera() {
             console.log(my_camera.id);
           });
         }
-    
-    
         if (cameras.length == 1) {
           my_camera = cameras[0];
         } 
