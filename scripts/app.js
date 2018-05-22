@@ -20,19 +20,26 @@ document.querySelector('.switch-cam').addEventListener('click', switch_camera);
 function switch_camera() {
   Instascan.Camera.getCameras().then(function (cameras) {
     console.log(cameras);
-    for (var i = 0; i < cameras.length; i++) {
-      document.querySelector('#out_0' + i).innerHTML = cameras[i].name;
-      document.querySelector('#out_0' + i).setAttribute('data-i', i);
-      document.querySelector('#out_0' + i).addEventListener('click', function() {
-        my_camera = cameras[this.dataset.i];
-        console.log(my_camera.id);
-      });
-    }
 
-
-    if (cameras.length == 1) {
+    if(true) {
       my_camera = cameras[0];
-    } 
+      
+    }
+    else {
+        for (var i = 0; i < cameras.length; i++) {
+          document.querySelector('#out_0' + i).innerHTML = cameras[i].name;
+          document.querySelector('#out_0' + i).setAttribute('data-i', i);
+          document.querySelector('#out_0' + i).addEventListener('click', function() {
+            my_camera = cameras[this.dataset.i];
+            console.log(my_camera.id);
+          });
+        }
+    
+    
+        if (cameras.length == 1) {
+          my_camera = cameras[0];
+        } 
+      }
   });
 
 }
@@ -66,7 +73,7 @@ function switch_camera() {
           
         },
         actionText: 'Why?',
-        timeout: 10000
+        timeout: 7000
       });
     }
 
