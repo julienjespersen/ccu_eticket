@@ -2,6 +2,7 @@
 let code;
 let cameras;
 let my_camera;
+let my_camera_i;
 
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
@@ -15,19 +16,28 @@ scanner.addListener('scan', function (content) {
 
   
 });
-document.querySelector('.switch-cam').addEventListener('click', switch_camera);
+// document.querySelector('.switch-cam').addEventListener('click', switch_camera);
+document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera());
+
+function switch_camera_2() {
+  my_camera_i = my_camera_i ? 0 : 1 ;
+  if (my_camera_i)  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+  
+}
+
 
 function switch_camera() {
+  console.log('radio has changed!');
   Instascan.Camera.getCameras().then(function (cameras) {
     console.log(cameras);
 
-    if(true) {
+    if(false) {
       my_camera = cameras[0];
       
     }
     else {
         for (var i = 0; i < cameras.length; i++) {
-          document.querySelector('#out_0' + i).innerHTML = cameras[i].name;
+          document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
           document.querySelector('#out_0' + i).setAttribute('data-i', i);
           document.querySelector('#out_0' + i).addEventListener('click', function() {
             my_camera = cameras[this.dataset.i];
