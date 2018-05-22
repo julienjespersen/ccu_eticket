@@ -7,11 +7,11 @@ let my_camera;
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 switch_camera();
 scanner.addListener('scan', function (content) {
-  cam_start(false);
   code = content;
   console.log(content);
   // console.log(count_record(content));
-    count_record(content);
+  count_record(content);
+  cam_start(false);
 
   
 });
@@ -96,6 +96,7 @@ function switch_camera() {
 
   function cam_start(StartStop) {
     if(StartStop) {
+      cam_status = true;
       scanner.start(my_camera);
 
       // Instascan.Camera.getCameras().then(function (cameras) {
@@ -113,6 +114,7 @@ function switch_camera() {
       // });        
     }
     else {
+      cam_status = false;
       scanner.stop(my_camera);
       
       // Instascan.Camera.getCameras().then(function (cameras) {
@@ -171,21 +173,21 @@ window.addEventListener('online', function(e) {
   updateConnectionIcon(true);
 });
 
-var nIntervId;
+// var nIntervId;
  
-function changeColor() {
-  nIntervId = setInterval(flashText, 1000);
-}
+// function changeColor() {
+//   nIntervId = setInterval(flashText, 1000);
+// }
 
-function flashText() {
-  var oElem = document.getElementById('my_box');
-  oElem.style.color = oElem.style.color == 'red' ? 'blue' : 'red';
-  // oElem.style.color == 'red' ? 'blue' : 'red' is a ternary operator.
-}
+// function flashText() {
+//   var oElem = document.getElementById('my_box');
+//   oElem.style.color = oElem.style.color == 'red' ? 'blue' : 'red';
+//   // oElem.style.color == 'red' ? 'blue' : 'red' is a ternary operator.
+// }
 
-function stopTextColor() {
-  clearInterval(nIntervId);
-}
+// function stopTextColor() {
+//   clearInterval(nIntervId);
+// }
 
 function AppOnOff() {
   if(!localStorage.getItem('app_state')) {

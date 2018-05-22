@@ -40,7 +40,7 @@ function update_reccord(reccord_obj) {
 	}).then(function (updated) {
 		if (updated) {
 		  console.log ("reccord updated");
-		  after_update;
+		  after_update();
 		}
 		else {
 			console.log ("not updated");
