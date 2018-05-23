@@ -1,6 +1,7 @@
 
 let code;
-let cameras;
+var all_my_freaking_cameras = [];
+var cameras = [];
 let my_camera;
 let my_camera_i;
 
@@ -17,9 +18,20 @@ scanner.addListener('scan', function (content) {
   
 });
 // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
-document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera_2);
+document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
 
-function switch_camera_2() {
+function assign_camera_2(id) {
+  // Instascan.Camera.getCameras().then(function (cameras) {
+  //   for (var i = 0; i < cameras.length; i++) {
+  //     if(cameras.id == id) {
+  //       my_camera = cameras[i];
+  //     }
+  //   }
+  // });
+
+
+
+
   my_camera_i = my_camera_i ? 0 : 1 ;
   console.log(my_camera_i);
   my_camera = cameras[my_camera_i];
@@ -32,6 +44,15 @@ function switch_camera_2() {
   }
   
 }
+
+  Instascan.Camera.getCameras().then(function (cameras) {
+    for (let i = 0; i < cameras.length; i++) {
+      all_my_freaking_cameras[i] = cameras[i];
+
+    }
+  });
+
+
 
 
 function switch_camera() {
