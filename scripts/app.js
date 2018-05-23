@@ -9,7 +9,10 @@ let cam_status;
 
 
 let vibrate_proceed = [100, 100, 100];
-let vibrate_alert = [100, 200, 100, 200, 500];
+let vibrate_alert = [100, 200, 100, 200, 400];
+
+var date_device = new Date();
+var date_update = new Date();
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
@@ -39,6 +42,18 @@ let scanner = new Instascan.Scanner({ video: document.getElementById('preview') 
 //   }
 // });
 
+
+function compare_storage() {
+  if(localStorage.getItem('date_remote_update')) {
+    console.log('device time: ' + Date.now());
+    console.log('update time: ' + date_update.getTime(localStorage.getItem('date_remote_update')));
+    console.log(Date.now() - date_device.getTime(localStorage.getItem('date_remote_update')));
+  }
+  else {
+    console.log('no remote date');
+  }
+
+}
 
 
 
@@ -189,7 +204,7 @@ document.querySelector('.butOnOff').addEventListener('click', function() {
 document.querySelector('.butUser').addEventListener('click', function() {
 });
 
-document.querySelector('.ButtonPower').addEventListener('click', AppOnOff());
+document.querySelector('.ButtonPower').addEventListener('click', AppOnOff);
 
 
 function updateConnectionIcon(status) {
@@ -215,39 +230,42 @@ window.addEventListener('online', function(e) {
   updateConnectionIcon(true);
 });
 
-// var nIntervId;
+var nIntervId;
  
-// function changeColor() {
-//   nIntervId = setInterval(flashText, 1000);
-// }
+function AppTimer(r) {
+  if (r == 'play') {
+    nIntervId = setInterval(compare_storage, 5000);
 
-// function flashText() {
-//   var oElem = document.getElementById('my_box');
-//   oElem.style.color = oElem.style.color == 'red' ? 'blue' : 'red';
-//   // oElem.style.color == 'red' ? 'blue' : 'red' is a ternary operator.
-// }
+  }
+  else {
+    clearInterval(nIntervId);
 
-// function stopTextColor() {
-//   clearInterval(nIntervId);
-// }
+  }
+}
+
 
 function AppOnOff() {
   if(!localStorage.getItem('app_state')) {
     localStorage.setItem('app_state', 0);
   }
-  if(localStorage.getItem('app_state')) {
-    // AppTimer(false);
+  if(localStorage.getItem('app_state') == 1) { // stop the app
+    
+    AppTimer('stop');
     // AppCam(false);
     // AppConnect(false);
     // AppButtons(false);
     localStorage.setItem('app_state', 0);
+    document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-100');
+    document.querySelector('.ButtonPower i').classList.add('mdl-color-text--grey-700');
   }
   else {
-    // AppTimer(true);
+    AppTimer('play');
     // AppCam(true);
     // AppConnect(true);
     // AppButtons(true);
     localStorage.setItem('app_state', 1);
+    document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-700');
+    document.querySelector('.ButtonPower i').classList.add('mdl-color-text--green-500');
   }
 }
 

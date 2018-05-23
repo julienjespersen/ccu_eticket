@@ -12,7 +12,8 @@ function db_synchro(data) {
     }).catch(Dexie.BulkError, function (e) {
         console.error ('error while injecting into db');
     });
-
+	localStorage.setItem('date_remote_update', date_update.toISOString());
+	console.log('date_remote_update: ' + date_update.toISOString());
 }
 
 function count_record(code) {
