@@ -3,11 +3,43 @@ let code;
 var all_my_freaking_cameras = [];
 var cameras = [];
 let my_camera;
-let my_camera_i;
+let my_camera_i = 1;
 
+let cam_status;
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+
+// let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+//       scanner.addListener('scan', function (content) {
+//         console.log(content);
+//       });
+//       Instascan.Camera.getCameras().then(function (cameras) {
+//         if (cameras.length > 0) {
+//           scanner.start(cameras[0]);
+//         } else {
+//           console.error('No cameras found.');
+//         }
+//       }).catch(function (e) {
+//         console.error(e);
+// });
+
+
+
+
+
+
+// Instascan.Camera.getCameras().then(function (cameras) {
+//   for (let i = 0; i < cameras.length; i++) {
+//     all_my_freaking_cameras[i] = cameras[i];
+
+//   }
+// });
+
+
+
+
 switch_camera();
+// assign_camera_2();
 scanner.addListener('scan', function (content) {
   code = content;
   console.log(content);
@@ -18,39 +50,8 @@ scanner.addListener('scan', function (content) {
   
 });
 // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
-document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
-
-function assign_camera_2(id) {
-  // Instascan.Camera.getCameras().then(function (cameras) {
-  //   for (var i = 0; i < cameras.length; i++) {
-  //     if(cameras.id == id) {
-  //       my_camera = cameras[i];
-  //     }
-  //   }
-  // });
-
-
-
-
-  my_camera_i = my_camera_i ? 0 : 1 ;
-  console.log(my_camera_i);
-  my_camera = cameras[my_camera_i];
-  if (my_camera_i)  {
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
-  }
-  else {
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true });
-    
-  }
-  
-}
-
-  Instascan.Camera.getCameras().then(function (cameras) {
-    for (let i = 0; i < cameras.length; i++) {
-      all_my_freaking_cameras[i] = cameras[i];
-
-    }
-  });
+document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
+// document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
 
 
 
@@ -81,111 +82,105 @@ function switch_camera() {
 }
 
 
-  function after_count(count) {
-    console.log('after count: ' + count);
-    if (count) {
-      fetch_reccord();
-    } else {
-      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
-        message: 'NOT (unknown)',
-        actionHandler: function(event) {
-          show_dialog('Unknown code number!', 'This code number doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
-        },
-        actionText: 'Why?',
-        timeout: 10000
-      });
-    }
+function after_count(count) {
+  console.log('after count: ' + count);
+  if (count) {
+    fetch_reccord();
+  } else {
+    document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
+      message: 'NOT (unknown)',
+      actionHandler: function(event) {
+        show_dialog('Unknown code number!', 'This code number doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
+      },
+      actionText: 'Why?',
+      timeout: 10000
+    });
   }
-  function after_fetch(reccord_obj) {
-    if(reccord_obj.count_total - reccord_obj.count_stub) {
-      update_reccord(reccord_obj);
-
-    }
-    else {
-      document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
-        message: 'NOT (expired)',
-        actionHandler: function(event) {
-          show_dialog('Expired ticket!', 'This ticket is no longer valid for this event. Please escort the offender toward the security officer ;)' )
-          
-        },
-        actionText: 'Why?',
-        timeout: 7000
-      });
-    }
-
+}
+function after_fetch(reccord_obj) {
+  if(reccord_obj.count_total - reccord_obj.count_stub) {
+    update_reccord(reccord_obj);
 
   }
-
-  function after_update() {
-    document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
-    
-  }
-  function show_dialog(info_title, info_msg) {
-    let dialog = document.querySelector('dialog');
-    dialog.querySelector('h4').innerHTML = info_title;
-    dialog.querySelector('p').innerHTML = info_msg;
-    dialog.showModal();
-    dialog.querySelector('.close').addEventListener('click', function() {
-      dialog.close();
+  else {
+    document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
+      message: 'NOT (expired)',
+      actionHandler: function(event) {
+        show_dialog('Expired ticket!', 'This ticket is no longer valid for this event. Please escort the offender toward the security officer ;)' )
+        
+      },
+      actionText: 'Why?',
+      timeout: 7000
     });
   }
 
-  let cam_status;
 
-  function cam_start(StartStop) {
-    if(StartStop) {
-      cam_status = true;
-      scanner.start(my_camera);
+}
 
-      // Instascan.Camera.getCameras().then(function (cameras) {
-      //   if (cameras.length > 0) {
-      //     scanner.start(cameras[0]);
-      //     var test = scanner.scan();
-      //     console.log(test);
-      //   } else {
-      //     console.error('No cameras found.');
-      //   }
-      // }).catch(function (e) {
-      //   console.error('ajsdfg');
-      //   console.error(e);
-      //   document.querySelector('pre').innerHTML = e;
-      // });        
-    }
-    else {
-      cam_status = false;
-      scanner.stop(my_camera);
-      
-      // Instascan.Camera.getCameras().then(function (cameras) {
-      //   if (cameras.length > 0) {
-      //     scanner.stop(cameras[0]);
-      //   } else {
-      //     console.error('No cameras found.');
-      //   }
-      // });        
-    }
+function after_update() {
+  document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
+  
+}
+function show_dialog(info_title, info_msg) {
+  let dialog = document.querySelector('dialog');
+  dialog.querySelector('h4').innerHTML = info_title;
+  dialog.querySelector('p').innerHTML = info_msg;
+  dialog.showModal();
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+}
+
+
+function cam_start(StartStop) {
+  if(StartStop) {
+    cam_status = true;
+    scanner.start(my_camera);
+
+    // Instascan.Camera.getCameras().then(function (cameras) {
+    //   if (cameras.length > 0) {
+    //     scanner.start(cameras[0]);
+    //     var test = scanner.scan();
+    //     console.log(test);
+    //   } else {
+    //     console.error('No cameras found.');
+    //   }
+    // }).catch(function (e) {
+    //   console.error('ajsdfg');
+    //   console.error(e);
+    //   document.querySelector('pre').innerHTML = e;
+    // });        
   }
+  else {
+    cam_status = false;
+    scanner.stop(my_camera);
+    
+    // Instascan.Camera.getCameras().then(function (cameras) {
+    //   if (cameras.length > 0) {
+    //     scanner.stop(cameras[0]);
+    //   } else {
+    //     console.error('No cameras found.');
+    //   }
+    // });        
+  }
+}
 
 
-  /*****************************************************************************
-   *
-   * Event listeners for UI elements
-   *
-   ****************************************************************************/
 
-  document.querySelector('.butOnOff').addEventListener('click', function() {
-    if (cam_status) {
-      cam_status = false;
-    }
-    else {
-      cam_status = true;
-    }
-    cam_start(cam_status);
-  });
+document.querySelector('.butOnOff').addEventListener('click', function() {
+  if (cam_status) {
+    cam_status = false;
+  }
+  else {
+    cam_status = true;
+  }
+  cam_start(cam_status);
+});
 
-  document.querySelector('.butUser').addEventListener('click', function() {
-  });
+document.querySelector('.butUser').addEventListener('click', function() {
+});
 
-  document.querySelector('.ButtonPower').addEventListener('click', AppOnOff());
+document.querySelector('.ButtonPower').addEventListener('click', AppOnOff());
 
 
 function updateConnectionIcon(status) {
