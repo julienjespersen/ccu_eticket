@@ -94,7 +94,7 @@ function after_count(count) {
     document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
       message: 'NOT (unknown)',
       actionHandler: function(event) {
-        show_dialog('Unknown code number!', 'This code number doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
+        show_dialog('Unknown code number!', 'This code number (' + code + ') doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
       },
       actionText: 'Why?',
       timeout: 10000
@@ -112,7 +112,7 @@ function after_fetch(reccord_obj) {
     document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
       message: 'NOT (expired)',
       actionHandler: function(event) {
-        show_dialog('Expired ticket!', 'This ticket is no longer valid for this event. Please escort the offender toward the security officer ;)' )
+        show_dialog('Expired ticket!', 'This ticket (' + code + ') is no longer valid for this event. Please escort the offender toward the security officer ;)' )
         
       },
       actionText: 'Why?',
