@@ -8,8 +8,8 @@ let my_camera_i = 1;
 let cam_status;
 
 
-let vibrate_proceed = [50, 50, 50];
-let vibrate_alert = [100, 200, 200, 200, 500];
+let vibrate_proceed = [100, 100, 100];
+let vibrate_alert = [100, 200, 100, 200, 500];
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
