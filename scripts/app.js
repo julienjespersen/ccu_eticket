@@ -7,6 +7,10 @@ let my_camera_i = 1;
 
 let cam_status;
 
+
+let vibrate_proceed = [50, 50, 50];
+let vibrate_alert = [100, 200, 200, 200, 500];
+
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
@@ -95,6 +99,8 @@ function after_count(count) {
       actionText: 'Why?',
       timeout: 10000
     });
+    navigator.vibrate(vibrate_alert);
+
   }
 }
 function after_fetch(reccord_obj) {
@@ -112,6 +118,8 @@ function after_fetch(reccord_obj) {
       actionText: 'Why?',
       timeout: 7000
     });
+    navigator.vibrate(vibrate_alert);
+
   }
 
 
@@ -119,6 +127,7 @@ function after_fetch(reccord_obj) {
 
 function after_update() {
   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
+  navigator.vibrate(vibrate_proceed);
   
 }
 function show_dialog(info_title, info_msg) {
