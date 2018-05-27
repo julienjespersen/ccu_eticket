@@ -1,6 +1,6 @@
 var db = new Dexie("eticket");
 db.version(1).stores({
-    tickets: '++code'
+    tickets: '++code, count_stub'
 });
 
 
