@@ -16,6 +16,8 @@ var date_update = new Date();
 
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
 
+add_to_log('app started 🤘🏻');
+
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
 //         console.log(content);
@@ -76,7 +78,7 @@ document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera)
 
 
 function switch_camera() {
-  console.log('radio has changed!');
+  // console.log('radio has changed!');
   Instascan.Camera.getCameras().then(function (cameras) {
     console.log(cameras);
 
@@ -95,8 +97,11 @@ function switch_camera() {
         if (cameras.length == 1) {
           my_camera = cameras[0];
         } 
-      }
+    }
+    add_to_log('camera id: ' + my_camera.id);
+    
   });
+  
 
 }
 
@@ -153,6 +158,12 @@ function show_dialog(info_title, info_msg) {
   dialog.querySelector('.close').addEventListener('click', function() {
     dialog.close();
   });
+}
+
+function add_to_log(msg) {
+  let li = document.createElement('li');
+  li.innerHTML = msg;
+  document.querySelector('.log').appendChild(li);
 }
 
 

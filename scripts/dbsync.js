@@ -1,6 +1,6 @@
 var db = new Dexie("eticket");
 db.version(1).stores({
-    tickets: '++code, count_stub'
+    tickets: '++code'
 });
 
 
@@ -34,20 +34,23 @@ function fetch_reccord() {
 
 function update_reccord(reccord_obj) {
 	let new_count = reccord_obj.count_stub + 1;
+	add_to_log('in update_record');
+	
 	db.tickets
-	.update(code, {
-		count_stub: new_count
-		,date_stub: '2018-05-18 15:00:00'
-	}).then(function (updated) {
-		if (updated) {
-		  console.log ("reccord updated");
-		  after_update();
-		}
-		else {
-			console.log ("not updated");
+		.update(code, {
+			count_stub: new_count
+			,date_stub: '2018-05-18 15:00:00'
+		})
+		.then(function (updated) {
+			if (updated) {
+				console.log ("reccord updated");
+				after_update();
+			}
+			else {
+				console.log ("not updated");
 
-		}
-	  });
+			}
+		});
 }
 
 // function to fetch and feed content from and to the rest api 
