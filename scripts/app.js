@@ -148,6 +148,7 @@ function after_fetch(reccord_obj) {
 function after_update() {
   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
   navigator.vibrate(vibrate_proceed);
+  add_to_log('OK proceed');
   
 }
 function show_dialog(info_title, info_msg) {
