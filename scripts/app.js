@@ -14,7 +14,7 @@ let vibrate_alert = [100, 200, 100, 200, 400];
 var date_device = new Date();
 var date_update = new Date();
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
