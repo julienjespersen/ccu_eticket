@@ -17,10 +17,7 @@ function db_synchro(data) {
 }
 
 function count_record(code) {
-
 	db.tickets.where('code').equals(code).count(after_count);
-
-	
 }
 
 function fetch_reccord() {
