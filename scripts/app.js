@@ -82,7 +82,7 @@ function switch_camera() {
   Instascan.Camera.getCameras().then(function (cameras) {
     console.log(cameras);
 
-    if(false) {
+    if(true) {
       my_camera = cameras[0];
     }
     else {
