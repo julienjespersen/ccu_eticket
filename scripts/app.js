@@ -106,6 +106,8 @@ function switch_camera() {
     else {
         for (var i = 0; i < cameras.length; i++) {
           document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
+          let a = document.createElement('a');
+          a.classList.add('mdl-navigation__link');
           document.querySelector('#out_0' + i).setAttribute('data-i', i);
           document.querySelector('#out_0' + i).addEventListener('click', function() {
             my_camera = cameras[this.dataset.i];
