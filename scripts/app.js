@@ -38,7 +38,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true });
 
 
-add_to_log('app started');
+add_to_log('app started 01');
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
