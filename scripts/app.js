@@ -20,10 +20,12 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
+    add_to_log('mirror true');
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
     mirror = false;
+    add_to_log('mirror false');
   }
   else {
     console.error('No cameras found.');
