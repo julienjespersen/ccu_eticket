@@ -71,9 +71,27 @@ scanner.addListener('scan', function (content) {
   
 });
 // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
-document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
-// document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
+// document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
+document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
 
+function assign_camera_2() {
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      for (let i = 0; i < cameras.length; i++) {
+        document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
+        document.querySelector('#out_0' + i).setAttribute('data-i', i);
+        document.querySelector('#out_0' + i).addEventListener('click', function() {
+          my_camera = cameras[this.dataset.i];
+          console.log(my_camera.id);
+        });
+      }
+    } else {
+      console.error('No cameras found.');
+    }
+  }).catch(function (e) {
+    console.error(e);
+  });
+}
 
 
 
