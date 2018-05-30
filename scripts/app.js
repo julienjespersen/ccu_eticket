@@ -22,13 +22,30 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    scanner = new Instascan.Scanner({ video: document.getElementById('preview') }).addListener('scan', function (content) {
+      code = content;
+      console.log(content);
+      // console.log(count_record(content));
+      count_record(content);
+      cam_start(false);
+    
+      
+    });
+    ;
     add_to_log('mirror false');
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
     mirror = true;
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true  });
+    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true  }).addListener('scan', function (content) {
+      code = content;
+      console.log(content);
+      // console.log(count_record(content));
+      count_record(content);
+      cam_start(false);
+    
+      
+    });
     
     // opts = { video: document.getElementById('preview'), mirror: true };
     add_to_log('mirror true');
@@ -100,18 +117,18 @@ function compare_storage() {
 
 AppOnOff();
 
-switch_camera();
+// switch_camera();
 // assign_camera_2();
-scanner.addListener('scan', function (content) {
-  code = content;
-  console.log(content);
-  // console.log(count_record(content));
-  count_record(content);
-  cam_start(false);
+// scanner.addListener('scan', function (content) {
+//   code = content;
+//   console.log(content);
+//   // console.log(count_record(content));
+//   count_record(content);
+//   cam_start(false);
 
   
-});
-// document.querySelector('.switch-cam').addEventListener('click', switch_camera);
+// });
+// // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
 // document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
 document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
 
