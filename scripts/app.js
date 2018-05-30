@@ -5,7 +5,6 @@ var cameras = [];
 let my_camera;
 let my_camera_i = 1;
 
-let mirror = false;
 let opts;
 let scanner;
 
@@ -13,94 +12,36 @@ let cam_status;
 
 
 let vibrate_proceed = [100, 100, 100];
-let vibrate_alert = [100, 200, 100, 200, 400];
+let vibrate_alert = [300, 100, 300, 100, 300];
 
 var date_device = new Date();
 var date_update = new Date();
 
 
 Instascan.Camera.getCameras().then(function (cameras) {
+  let mirror = false;
   if (cameras.length == 2) {
     my_camera = cameras[1];
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false }).addListener('scan', function (content) {
-      code = content;
-      console.log(content);
-      // console.log(count_record(content));
-      count_record(content);
-      cam_start(false);
-    
-      
-    });
-    ;
-    add_to_log('mirror false');
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
     mirror = true;
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true  }).addListener('scan', function (content) {
-      code = content;
-      console.log(content);
-      // console.log(count_record(content));
-      count_record(content);
-      cam_start(false);
-    
-      
-    });
-    
-    // opts = { video: document.getElementById('preview'), mirror: true };
-    add_to_log('mirror true');
   }
   else {
     console.error('No cameras found.');
   }
+  scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: mirror  }).addListener('scan', function (content) {
+    code = content;
+    console.log(content);
+    count_record(content);
+    cam_start(false);
+  });
 }).catch(function (e) {
   console.error(e);
 });
 
 
-// let scanner = new Instascan.Scanner(opts);
-
-
-add_to_log('app started 06');
-
-// let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-//       scanner.addListener('scan', function (content) {
-//         console.log(content);
-//       });
-//       Instascan.Camera.getCameras().then(function (cameras) {
-//         if (cameras.length > 0) {
-//           scanner.start(cameras[0]);
-//         } else {
-//           console.error('No cameras found.');
-//         }
-//       }).catch(function (e) {
-//         console.error(e);
-// });
-
-
-    // Instascan.Camera.getCameras().then(function (cameras) {
-    //   if (cameras.length > 0) {
-    //     scanner.start(cameras[0]);
-    //     var test = scanner.scan();
-    //     console.log(test);
-    //   } else {
-    //     console.error('No cameras found.');
-    //   }
-    // }).catch(function (e) {
-    //   console.error('ajsdfg');
-    //   console.error(e);
-    //   document.querySelector('pre').innerHTML = e;
-    // });        
-
-
-
-
-// Instascan.Camera.getCameras().then(function (cameras) {
-//   for (let i = 0; i < cameras.length; i++) {
-//     all_my_freaking_cameras[i] = cameras[i];
-
-//   }
-// });
+add_to_log('app started 07');
 
 
 function compare_storage() {
