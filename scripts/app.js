@@ -22,7 +22,7 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
-    scanner = new Instascan.Scanner({ video: document.getElementById('preview') }).addListener('scan', function (content) {
+    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false }).addListener('scan', function (content) {
       code = content;
       console.log(content);
       // console.log(count_record(content));
@@ -61,7 +61,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 // let scanner = new Instascan.Scanner(opts);
 
 
-add_to_log('app started 04');
+add_to_log('app started 05');
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
