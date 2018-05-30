@@ -5,7 +5,7 @@ var cameras = [];
 let my_camera;
 let my_camera_i = 1;
 
-let mirror = true;
+let mirror = false;
 
 let cam_status;
 
@@ -20,10 +20,10 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
-    mirror = true;
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
+    mirror = true;
   }
   else {
     console.error('No cameras found.');
