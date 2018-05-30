@@ -61,7 +61,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 // let scanner = new Instascan.Scanner(opts);
 
 
-add_to_log('app started 05');
+add_to_log('app started 06');
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
@@ -195,9 +195,10 @@ function after_count(count) {
         show_dialog('Unknown code number!', 'This code number (' + code + ') doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
       },
       actionText: 'Why?',
-      timeout: 10000
+      timeout: 5000
     });
     navigator.vibrate(vibrate_alert);
+    feedback_bg(false);
 
   }
 }
@@ -214,20 +215,40 @@ function after_fetch(reccord_obj) {
         
       },
       actionText: 'Why?',
-      timeout: 7000
+      timeout: 5000
     });
     navigator.vibrate(vibrate_alert);
+    feedback_bg(false);
 
   }
 
 
 }
 
+function feedback_bg(okfail) {
+  let main = document.querySelector('main');
+  let the_class;
+  if (okfail) {
+    the_class = 'mdl-color--green-700';
+  }
+  else {
+   the_class = 'mdl-color--red-700';
+  }
+  main.classList.remove('mdl-color--grey-700');
+  main.classList.add(the_class);
+  setTimeout(function (){
+    main.classList.remove(the_class);
+    main.classList.add('mdl-color--grey-700');
+  }, 2000);
+}
+
+
 function after_update() {
   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
   navigator.vibrate(vibrate_proceed);
   add_to_log('OK proceed');
-  
+  feedback_bg(true);
+
 }
 function show_dialog(info_title, info_msg) {
   let dialog = document.querySelector('dialog');
