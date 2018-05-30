@@ -6,6 +6,8 @@ let my_camera;
 let my_camera_i = 1;
 
 let mirror = false;
+let opts;
+let scanner;
 
 let cam_status;
 
@@ -20,11 +22,15 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
+    scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
     add_to_log('mirror false');
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
     mirror = true;
+    scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true  });
+    
+    // opts = { video: document.getElementById('preview'), mirror: true };
     add_to_log('mirror true');
   }
   else {
@@ -35,10 +41,10 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: mirror });
+// let scanner = new Instascan.Scanner(opts);
 
 
-add_to_log('app started 03');
+add_to_log('app started 04');
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
