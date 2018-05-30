@@ -5,7 +5,7 @@ var cameras = [];
 let my_camera;
 let my_camera_i = 1;
 
-let mirror = true;
+let mirror = false;
 
 let cam_status;
 
@@ -20,12 +20,12 @@ var date_update = new Date();
 Instascan.Camera.getCameras().then(function (cameras) {
   if (cameras.length == 2) {
     my_camera = cameras[1];
-    add_to_log('mirror true');
+    add_to_log('mirror false');
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
-    mirror = false;
-    add_to_log('mirror false');
+    mirror = true;
+    add_to_log('mirror true');
   }
   else {
     console.error('No cameras found.');
@@ -35,10 +35,10 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
+let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: mirror });
 
 
-add_to_log('app started 02');
+add_to_log('app started 03');
 
 // let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 //       scanner.addListener('scan', function (content) {
