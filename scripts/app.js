@@ -1,4 +1,3 @@
-
 let code;
 var all_my_freaking_cameras = [];
 var cameras = [];
@@ -41,7 +40,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app started 07');
+add_to_log('app started 08');
 
 
 function compare_storage() {
@@ -71,58 +70,58 @@ AppOnOff();
 // });
 // // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
 // document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
-document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
+// document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
 
-function assign_camera_2() {
-  Instascan.Camera.getCameras().then(function (cameras) {
-    if (cameras.length > 0) {
-      for (let i = 0; i < cameras.length; i++) {
-        document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
-        document.querySelector('#out_0' + i).setAttribute('data-i', i);
-        document.querySelector('#out_0' + i).addEventListener('click', function() {
-          my_camera = cameras[this.dataset.i];
-          console.log(my_camera.id);
-        });
-      }
-    } else {
-      console.error('No cameras found.');
-    }
-  }).catch(function (e) {
-    console.error(e);
-  });
-}
+// function assign_camera_2() {
+//   Instascan.Camera.getCameras().then(function (cameras) {
+//     if (cameras.length > 0) {
+//       for (let i = 0; i < cameras.length; i++) {
+//         document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
+//         document.querySelector('#out_0' + i).setAttribute('data-i', i);
+//         document.querySelector('#out_0' + i).addEventListener('click', function() {
+//           my_camera = cameras[this.dataset.i];
+//           console.log(my_camera.id);
+//         });
+//       }
+//     } else {
+//       console.error('No cameras found.');
+//     }
+//   }).catch(function (e) {
+//     console.error(e);
+//   });
+// }
 
 
 
-function switch_camera() {
-  // console.log('radio has changed!');
-  Instascan.Camera.getCameras().then(function (cameras) {
-    console.log(cameras);
+// function switch_camera() {
+//   // console.log('radio has changed!');
+//   Instascan.Camera.getCameras().then(function (cameras) {
+//     console.log(cameras);
 
-    if(cameras.length == 2) {
-      my_camera = cameras[1];
-    }
-    else {
-        for (var i = 0; i < cameras.length; i++) {
-          document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
-          let a = document.createElement('a');
-          a.classList.add('mdl-navigation__link');
-          document.querySelector('#out_0' + i).setAttribute('data-i', i);
-          document.querySelector('#out_0' + i).addEventListener('click', function() {
-            my_camera = cameras[this.dataset.i];
-            console.log(my_camera.id);
-          });
-        }
-        if (cameras.length == 1) {
-          my_camera = cameras[0];
-        } 
-    }
-    // add_to_log('camera id: ' + my_camera.id);
+//     if(cameras.length == 2) {
+//       my_camera = cameras[1];
+//     }
+//     else {
+//         for (var i = 0; i < cameras.length; i++) {
+//           document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
+//           let a = document.createElement('a');
+//           a.classList.add('mdl-navigation__link');
+//           document.querySelector('#out_0' + i).setAttribute('data-i', i);
+//           document.querySelector('#out_0' + i).addEventListener('click', function() {
+//             my_camera = cameras[this.dataset.i];
+//             console.log(my_camera.id);
+//           });
+//         }
+//         if (cameras.length == 1) {
+//           my_camera = cameras[0];
+//         } 
+//     }
+//     // add_to_log('camera id: ' + my_camera.id);
     
-  });
+//   });
   
 
-}
+// }
 
 
 function after_count(count) {
@@ -212,32 +211,10 @@ function cam_start(StartStop) {
   if(StartStop) {
     cam_status = true;
     scanner.start(my_camera);
-
-    // Instascan.Camera.getCameras().then(function (cameras) {
-    //   if (cameras.length > 0) {
-    //     scanner.start(cameras[0]);
-    //     var test = scanner.scan();
-    //     console.log(test);
-    //   } else {
-    //     console.error('No cameras found.');
-    //   }
-    // }).catch(function (e) {
-    //   console.error('ajsdfg');
-    //   console.error(e);
-    //   document.querySelector('pre').innerHTML = e;
-    // });        
   }
   else {
     cam_status = false;
     scanner.stop(my_camera);
-    
-    // Instascan.Camera.getCameras().then(function (cameras) {
-    //   if (cameras.length > 0) {
-    //     scanner.stop(cameras[0]);
-    //   } else {
-    //     console.error('No cameras found.');
-    //   }
-    // });        
   }
 }
 
@@ -334,10 +311,6 @@ var domainUrl = 'https://unige.ch/dife/api/v1/tickets/';
 var id_question = 9985;
 	// get all tickets
 myRequestResponseFunction('GET', domainUrl + id_question, {hello: 'world'}, {TOKEN: 123}, db_synchro);
-
-
-
-
 
 
 window.addEventListener("load", AppOnOff());
