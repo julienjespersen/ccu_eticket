@@ -5,7 +5,7 @@ var cameras = [];
 let my_camera;
 let my_camera_i = 1;
 
-let mirror = false;
+let mirror = true;
 
 let cam_status;
 
@@ -23,7 +23,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
   } 
   else if (cameras.length == 1) {
     my_camera = cameras[0];
-    mirror = true;
+    mirror = false;
   }
   else {
     console.error('No cameras found.');
