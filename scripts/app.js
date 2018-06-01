@@ -45,9 +45,11 @@ add_to_log('app started 08');
 
 function compare_storage() {
   if(localStorage.getItem('date_remote_update')) {
-    console.log('device time: ' + Date.now());
-    console.log('update time: ' + date_update.getTime(localStorage.getItem('date_remote_update')));
-    console.log(Date.now() - date_device.getTime(localStorage.getItem('date_remote_update')));
+    let ttlu = parseInt((Date.now() - date_device.getTime(localStorage.getItem('date_remote_update'))) / 1000);
+    // console.log('device time: ' + Date.now());
+    add_to_log('time to last update: ' + ttlu + ' s.');
+    // console.log('update time: ' + date_update.getTime(localStorage.getItem('date_remote_update')));
+    // console.log(Date.now() - date_device.getTime(localStorage.getItem('date_remote_update')));
   }
   else {
     console.log('no remote date');
@@ -200,10 +202,23 @@ function show_dialog(info_title, info_msg) {
   });
 }
 
-function add_to_log(msg) {
+function add_to_log(msg, type = 'info') {
   let li = document.createElement('li');
-  li.innerHTML = msg;
-  document.querySelector('.log').appendChild(li);
+  let span = document.createElement('span');
+  let i = document.createElement('i');
+  let mt = document.createTextNode(msg);
+  let it = document.createTextNode(type);
+  let ul = document.querySelector('#fixed-tab-3 ul');
+
+  li.classList.add('mdl-list__item');
+  span.classList.add('mdl-list__item-primary-content');
+  i.classList.add('material-icons', 'mdl-list__item-icon');
+
+  i.appendChild(it);
+  span.appendChild(i);
+  span.appendChild(mt);
+  li.appendChild(span);
+  ul.insertBefore(li, ul.firstChild);
 }
 
 
@@ -250,13 +265,14 @@ if (navigator.onLine) {
   updateConnectionIcon(false);
 }
 window.addEventListener('offline', function(e) { 
-  console.log('offline');
   updateConnectionIcon(false);
+  add_to_log('app goes offline');
 
 });
 window.addEventListener('online', function(e) { 
-  console.log('online'); 
   updateConnectionIcon(true);
+  add_to_log('app goes online');
+  
 });
 
 var nIntervId;
@@ -286,6 +302,7 @@ function AppOnOff() {
     localStorage.setItem('app_state', 0);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-100');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--grey-700');
+    add_to_log('app stopped');
   }
   else {
     AppTimer('play');
@@ -295,6 +312,7 @@ function AppOnOff() {
     localStorage.setItem('app_state', 1);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-700');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--green-500');
+    add_to_log('app started');
   }
 }
 
