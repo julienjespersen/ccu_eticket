@@ -11,9 +11,14 @@ function db_synchro(data) {
         console.log('done: ' + lastKey); 
     }).catch(Dexie.BulkError, function (e) {
         console.error ('error while injecting into db');
-    });
-	localStorage.setItem('date_remote_update', date_update.toISOString());
-	console.log('date_remote_update: ' + date_update.toISOString());
+	})
+	.then(function(){
+		console.log('date_remote_update: ' + date_update.toISOString());
+		localStorage.setItem('date_remote_update', date_update.toISOString());
+		add_to_log('feed response @ ' + date_update.toISOString(), 'cloud_download');
+		updateAttendeeList();
+	});
+	
 }
 
 function count_record(code) {
@@ -31,17 +36,22 @@ function fetch_reccord() {
 
 function update_reccord(reccord_obj) {
 	let new_count = reccord_obj.count_stub + 1;
+	let new_date = '2018-05-18 15:00:00';
+	
+	reccord_obj.count_stub = new_count;
+	reccord_obj.date_stub = new_date;
+
 	add_to_log('in update_record');
 	
 	db.tickets
 		.update(code, {
 			count_stub: new_count
-			,date_stub: '2018-05-18 15:00:00'
+			,date_stub: new_date
 		})
 		.then(function (updated) {
 			if (updated) {
 				console.log ("reccord updated");
-				after_update();
+				after_update(reccord_obj);
 			}
 			else {
 				console.log ("not updated");

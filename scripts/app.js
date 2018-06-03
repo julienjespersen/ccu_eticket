@@ -40,14 +40,14 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app started 08');
+add_to_log('app version 0.0.09', 'settings');
 
 
 function compare_storage() {
   if(localStorage.getItem('date_remote_update')) {
     let ttlu = parseInt((Date.now() - date_device.getTime(localStorage.getItem('date_remote_update'))) / 1000);
     // console.log('device time: ' + Date.now());
-    add_to_log('time to last update: ' + ttlu + ' s.');
+    add_to_log('time to last update: ' + ttlu + ' s.', 'timer');
     // console.log('update time: ' + date_update.getTime(localStorage.getItem('date_remote_update')));
     // console.log(Date.now() - date_device.getTime(localStorage.getItem('date_remote_update')));
   }
@@ -124,6 +124,56 @@ AppOnOff();
   
 
 // }
+function updateAttendeeList() {
+  // db.tickets.each(ticket => console.log(ticket.code));
+  db.tickets.each(function(ticket) {
+    console.log(ticket.id_ticket);
+    createTicket(ticket);
+  })
+  // db.tickets.get().then (function (all) {
+  //   console.log(all);
+  // });
+}
+
+function createTicket(ticket) {
+  if(document.querySelector('t' + ticket.id_ticket)) {
+    document.querySelector('t' + ticket.id_ticket).remove();
+  }
+  if(!ticket.date_stub) {
+    ticket.date_stub = '';
+  }
+  let li = document.createElement('li');
+  let span1 = document.createElement('span');
+  let span2 = document.createElement('span');
+  let i = document.createElement('i');
+  let mt = document.createTextNode(ticket.code);
+  let it = document.createTextNode('person');
+  
+  let ul = document.querySelector('#fixed-tab-2 ul');
+
+  li.classList.add('mdl-list__item', 'mdl-list__item--two-line', 'mdl-color--grey-100');
+  li.id = 't' + ticket.id_ticket;
+  span1.classList.add('mdl-list__item-primary-content');
+  span2.classList.add('mdl-list__item-secondary-content');
+  i.classList.add('material-icons', 'mdl-list__item-icon');
+
+
+  span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.date_stub + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.code + '</span>';
+  span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
+
+  // i.appendChild(it);
+  // span1.appendChild(i);
+  // span1.appendChild(mt);
+  li.appendChild(span1);
+  li.appendChild(span2);
+  // ul.insertBefore(li, ul.firstChild);
+  ul.insertBefore(li, ul.firstChild);
+
+  // ul.appendChild(li);
+}
+
+
+
 
 
 function after_count(count) {
@@ -154,17 +204,13 @@ function after_fetch(reccord_obj) {
       message: 'NOT (expired)',
       actionHandler: function(event) {
         show_dialog('Expired ticket!', 'This ticket (' + code + ') is no longer valid for this event. Please escort the offender toward the security officer ;)' )
-        
       },
       actionText: 'Why?',
       timeout: 5000
     });
     navigator.vibrate(vibrate_alert);
     feedback_bg(false);
-
   }
-
-
 }
 
 function feedback_bg(okfail) {
@@ -185,13 +231,17 @@ function feedback_bg(okfail) {
 }
 
 
-function after_update() {
+function after_update(ticket) {
   document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({message: 'OK proceed! '});
   navigator.vibrate(vibrate_proceed);
   add_to_log('OK proceed');
   feedback_bg(true);
-
+  createTicket(ticket);
+  console.log('kes tu fou!');
 }
+
+
+
 function show_dialog(info_title, info_msg) {
   let dialog = document.querySelector('dialog');
   dialog.querySelector('h4').innerHTML = info_title;
@@ -266,12 +316,12 @@ if (navigator.onLine) {
 }
 window.addEventListener('offline', function(e) { 
   updateConnectionIcon(false);
-  add_to_log('app goes offline');
+  add_to_log('app goes offline', 'signal_cellular_off');
 
 });
 window.addEventListener('online', function(e) { 
   updateConnectionIcon(true);
-  add_to_log('app goes online');
+  add_to_log('app goes online', 'signal_cellular_4_bars');
   
 });
 
@@ -302,7 +352,7 @@ function AppOnOff() {
     localStorage.setItem('app_state', 0);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-100');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--grey-700');
-    add_to_log('app stopped');
+    add_to_log('app stopped', 'stop');
   }
   else {
     AppTimer('play');
@@ -312,7 +362,7 @@ function AppOnOff() {
     localStorage.setItem('app_state', 1);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-700');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--green-500');
-    add_to_log('app started');
+    add_to_log('app started', 'play_arrow');
   }
 }
 
@@ -327,6 +377,7 @@ function AppButtons(param) {
 
 var domainUrl = 'https://unige.ch/dife/api/v1/tickets/';
 var id_question = 9985;
+add_to_log('feed requested: ' + domainUrl + id_question, 'link');
 	// get all tickets
 myRequestResponseFunction('GET', domainUrl + id_question, {hello: 'world'}, {TOKEN: 123}, db_synchro);
 
