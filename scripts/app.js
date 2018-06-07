@@ -298,6 +298,10 @@ document.querySelector('.butOnOff').addEventListener('click', function() {
 document.querySelector('.butUser').addEventListener('click', function() {
 });
 
+document.querySelector('#show-user').addEventListener('click', function() {
+  document.querySelector('#user-profile').dislpay = 'bloc';
+});
+
 document.querySelector('.ButtonPower').addEventListener('click', AppOnOff);
 
 

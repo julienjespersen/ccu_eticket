@@ -4,7 +4,6 @@
 }
 .cam-btn-container {
   z-index: 10;
-
 }
 #preview {
   position: fixed;
@@ -23,5 +22,8 @@
 }
 main {
   transition: background-color .35s ease-out;
+}
 
+#user-profile {
+  display: none;
 }
