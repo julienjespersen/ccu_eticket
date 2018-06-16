@@ -161,6 +161,7 @@ function createTicket(ticket) {
   span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.date_stub + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.code + '</span>';
   span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
 
+  
   // i.appendChild(it);
   // span1.appendChild(i);
   // span1.appendChild(mt);

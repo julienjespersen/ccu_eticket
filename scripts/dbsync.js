@@ -34,6 +34,7 @@ function fetch_reccord() {
 }
 
 
+
 function update_reccord(reccord_obj) {
 	let new_count = reccord_obj.count_stub + 1;
 	let new_date = '2018-05-18 15:00:00';
