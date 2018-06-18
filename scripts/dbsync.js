@@ -62,7 +62,7 @@ function update_reccord(reccord_obj) {
 }
 
 // function to fetch and feed content from and to the rest api 
-function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'world'}, headers_obj = {'TOKEN': ''}, callBackFunction) {
+function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'world'}, headers_obj = {'TOKEN': 'hello from header'}, callBackFunction) {
 	// for GET or DELETE method no need of a body
 	if (method_str == 'GET' || method_str == 'DELETE') {
 		var fetchParams = {
