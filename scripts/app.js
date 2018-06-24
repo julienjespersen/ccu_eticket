@@ -380,7 +380,7 @@ function AppButtons(param) {
   }
 }
 
-var domainUrl = 'https://unige.ch/dife/api/v1/tickets/';
+var domainUrl = 'https://unige.ch/dife/api/v1/eticket/tickets/';
 var id_question = 9985;
 add_to_log('feed requested: ' + domainUrl + id_question, 'link');
 	// get all tickets
