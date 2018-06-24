@@ -116,7 +116,7 @@
   </div>    
 
 
-<dialog class="mdl-dialog">
+  <dialog class="mdl-dialog">
     <h4 class="mdl-dialog__title">Allow data collection?</h4>
     <div class="mdl-dialog__content">
       <p>
@@ -126,18 +126,31 @@
     <div class="mdl-dialog__actions">
       <button type="button" class="mdl-button close">OK</button>
     </div>
-</dialog>
+  </dialog>
+  
+  <dialog class="mdl-dialog" id="login-dialog">
+    <h4 class="mdl-dialog__title">Title</h4>
+    <div class="mdl-dialog__content">
+      <p>
+        Message.
+      </p>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button">OK</button>
+      <button type="button" class="mdl-button close">Cancel</button>
+    </div>
+  </dialog>
+  
+  
+    
 
+  <script src="scripts/instascan.min.js"></script>
+  <script src="scripts/dexie.min.js"></script>
+  <!-- <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script> -->
 
-
-
-<script src="scripts/instascan.min.js"></script>
-<script src="scripts/dexie.min.js"></script>
-<!-- <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script> -->
-
-<script src="scripts/dbsync.js"></script>
-<!-- <script src="scripts/db2.js"></script> -->
-<script src="scripts/app.js"></script>
+  <script src="scripts/dbsync.js"></script>
+  <!-- <script src="scripts/db2.js"></script> -->
+  <script src="scripts/app.js"></script>
 
 </body>
 </html>

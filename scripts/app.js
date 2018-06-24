@@ -253,6 +253,16 @@ function show_dialog(info_title, info_msg) {
   });
 }
 
+function show_login_dialog(info_title, info_msg) {
+  let dialog = document.querySelector('#login-dialog');
+  dialog.querySelector('h4').innerHTML = info_title;
+  dialog.querySelector('p').innerHTML = info_msg;
+  dialog.showModal();
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+}
+
 function add_to_log(msg, type = 'info') {
   let li = document.createElement('li');
   let span = document.createElement('span');
@@ -296,8 +306,7 @@ document.querySelector('.butOnOff').addEventListener('click', function() {
   cam_start(cam_status);
 });
 
-document.querySelector('.butUser').addEventListener('click', function() {
-});
+document.querySelector('.butUser').addEventListener('click', show_login_dialog);
 
 document.querySelector('#show-user').addEventListener('click', function() {
   document.querySelector('#user-profile').dislpay = 'bloc';
