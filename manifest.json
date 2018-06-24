@@ -22,12 +22,6 @@
       "sizes": "256x256",
       "type": "image/png"
     }],
-    "background": {
-      "scripts": [
-        "scripts/app.js",
-        "scripts/instascan.min.js",
-        "scripts/dexie.min.js"
-      ]},
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#616161",
