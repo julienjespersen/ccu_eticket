@@ -82,8 +82,11 @@ function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'worl
 	.catch(error => console.error('Error:', error))
 	.then(function(response) {
 		return response.json(); 
+		// return response; 
 	})
-	.then(function(data) {
-		callBackFunction(data);
+	// .then(function(data) {
+	// 	callBackFunction(data);
+	.then(function(response) {
+		callBackFunction(response);
 	});
 }

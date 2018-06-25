@@ -117,10 +117,10 @@
 
 
   <dialog class="mdl-dialog">
-    <h4 class="mdl-dialog__title">Allow data collection?</h4>
+    <h4 class="mdl-dialog__title">Title</h4>
     <div class="mdl-dialog__content">
       <p>
-        Allowing us to collect data will let us get you the information you want faster.
+        Message…
       </p>
     </div>
     <div class="mdl-dialog__actions">
@@ -129,15 +129,25 @@
   </dialog>
   
   <dialog class="mdl-dialog" id="login-dialog">
-    <h4 class="mdl-dialog__title">Title</h4>
+    <h4 class="mdl-dialog__title">Login</h4>
     <div class="mdl-dialog__content">
       <p>
         Message.
       </p>
-    </div>
-    <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button">OK</button>
-      <button type="button" class="mdl-button close">Cancel</button>
+      <form method="post" id="login-form" autocomplete="on">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="email" id="user-name" name="login_user_name">
+          <label class="mdl-textfield__label" for="user-name">E-mail</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="password" id="user-pwd" name="login_user_pwd">
+          <label class="mdl-textfield__label" for="user-pwd">Password</label>
+        </div>
+        <div class="mdl-dialog__actions">
+          <button type="button" class="mdl-button ok">OK</button>
+          <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+      </form>
     </div>
   </dialog>
   

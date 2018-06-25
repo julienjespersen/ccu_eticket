@@ -1,3 +1,7 @@
+var domainUrl = 'https://unige.ch/dife/api/v1/';
+var id_event = 9985;
+var token = '';
+
 let code;
 var all_my_freaking_cameras = [];
 var cameras = [];
@@ -127,7 +131,7 @@ AppOnOff();
 function updateAttendeeList() {
   // db.tickets.each(ticket => console.log(ticket.code));
   db.tickets.each(function(ticket) {
-    console.log(ticket.id_ticket);
+    // console.log(ticket.id_ticket);
     createTicket(ticket);
   })
   // db.tickets.get().then (function (all) {
@@ -263,6 +267,42 @@ function show_login_dialog(info_title, info_msg) {
   });
 }
 
+// user's stuff
+(function() {
+  let form = document.querySelector('#login-form');
+  let userButton = document.querySelector('.butUser');
+  let dialog = document.querySelector('#login-dialog');
+  userButton.addEventListener('click', function() {
+    dialog.showModal();
+  });
+  dialog.querySelector('button.close')
+  .addEventListener('click', function() {
+    dialog.close();
+  });
+  dialog.querySelector('button.ok')
+  // .addEventListener('click', myRequestResponseFunction('POST', domainUrl + 'logMe/', new FormData(form), {TOKEN: ''}, registerUser));
+  .addEventListener('click', function(){
+    myRequestResponseFunction('POST', domainUrl + 'logMe', new FormData(form), {TOKEN: ''}, registerUser);
+  });
+}());
+
+function registerUser(data) {
+  if(data.login.token) {
+    localStorage.setItem('token', data.login.token);
+  }
+  else {
+    localStorage.removeItem('token');
+  }
+}
+
+function AppConnect(YesNo) {
+  add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
+	// get all tickets
+  myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
+
+}
+
+
 function add_to_log(msg, type = 'info') {
   let li = document.createElement('li');
   let span = document.createElement('span');
@@ -306,7 +346,7 @@ document.querySelector('.butOnOff').addEventListener('click', function() {
   cam_start(cam_status);
 });
 
-document.querySelector('.butUser').addEventListener('click', show_login_dialog);
+// document.querySelector('.butUser').addEventListener('click', show_login_dialog);
 
 document.querySelector('#show-user').addEventListener('click', function() {
   document.querySelector('#user-profile').dislpay = 'bloc';
@@ -371,7 +411,7 @@ function AppOnOff() {
   else {
     AppTimer('play');
     // AppCam(true);
-    // AppConnect(true);
+    AppConnect(true);
     // AppButtons(true);
     localStorage.setItem('app_state', 1);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-700');
@@ -389,11 +429,6 @@ function AppButtons(param) {
   }
 }
 
-var domainUrl = 'https://unige.ch/dife/api/v1/eticket/tickets/';
-var id_question = 9985;
-add_to_log('feed requested: ' + domainUrl + id_question, 'link');
-	// get all tickets
-myRequestResponseFunction('GET', domainUrl + id_question, {hello: 'world'}, {TOKEN: 123}, db_synchro);
 
 
-window.addEventListener("load", AppOnOff());
+window.addEventListener('load', AppOnOff());
