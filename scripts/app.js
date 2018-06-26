@@ -1,6 +1,16 @@
 var domainUrl = 'https://unige.ch/dife/api/v1/';
+var id_user = 0;
+if(localStorage.getItem('id_user')) {
+  id_user = localStorage.getItem('id_user');
+}
 var id_event = 9985;
+if(localStorage.getItem('id_event')) {
+  id_event = localStorage.getItem('id_event');
+}
 var token = '';
+if(localStorage.getItem('token')) {
+  token = localStorage.getItem('token');
+}
 
 let code;
 var all_my_freaking_cameras = [];
@@ -13,6 +23,7 @@ let scanner;
 
 let cam_status;
 
+var login_dialog = document.querySelector('#login-dialog');
 
 let vibrate_proceed = [100, 100, 100];
 let vibrate_alert = [300, 100, 300, 100, 300];
@@ -44,7 +55,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.10', 'settings');
+add_to_log('app version 0.0.11', 'settings');
 
 
 function compare_storage() {
@@ -63,71 +74,25 @@ function compare_storage() {
 
 AppOnOff();
 
-// switch_camera();
-// assign_camera_2();
-// scanner.addListener('scan', function (content) {
-//   code = content;
-//   console.log(content);
-//   // console.log(count_record(content));
-//   count_record(content);
-//   cam_start(false);
 
-  
-// });
-// // document.querySelector('.switch-cam').addEventListener('click', switch_camera);
-// document.querySelector('#btnSwitchCam').addEventListener('click', switch_camera);
-// document.querySelector('#btnSwitchCam').addEventListener('click', assign_camera_2);
+function updateEventList(data) {
 
-// function assign_camera_2() {
-//   Instascan.Camera.getCameras().then(function (cameras) {
-//     if (cameras.length > 0) {
-//       for (let i = 0; i < cameras.length; i++) {
-//         document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
-//         document.querySelector('#out_0' + i).setAttribute('data-i', i);
-//         document.querySelector('#out_0' + i).addEventListener('click', function() {
-//           my_camera = cameras[this.dataset.i];
-//           console.log(my_camera.id);
-//         });
-//       }
-//     } else {
-//       console.error('No cameras found.');
-//     }
-//   }).catch(function (e) {
-//     console.error(e);
-//   });
-// }
+  console.log(data);
+  // data.each
+
+  // db.tickets.each(ticket => console.log(ticket.code));
+  // db.tickets.each(function(ticket) {
+  //   // console.log(ticket.id_ticket);
+  //   createTicket(ticket);
+  // })
+
+}
 
 
 
-// function switch_camera() {
-//   // console.log('radio has changed!');
-//   Instascan.Camera.getCameras().then(function (cameras) {
-//     console.log(cameras);
 
-//     if(cameras.length == 2) {
-//       my_camera = cameras[1];
-//     }
-//     else {
-//         for (var i = 0; i < cameras.length; i++) {
-//           document.querySelector('#out_0' + i).innerHTML = i + ': ' + cameras[i].name;
-//           let a = document.createElement('a');
-//           a.classList.add('mdl-navigation__link');
-//           document.querySelector('#out_0' + i).setAttribute('data-i', i);
-//           document.querySelector('#out_0' + i).addEventListener('click', function() {
-//             my_camera = cameras[this.dataset.i];
-//             console.log(my_camera.id);
-//           });
-//         }
-//         if (cameras.length == 1) {
-//           my_camera = cameras[0];
-//         } 
-//     }
-//     // add_to_log('camera id: ' + my_camera.id);
-    
-//   });
-  
 
-// }
+
 function updateAttendeeList() {
   // db.tickets.each(ticket => console.log(ticket.code));
   db.tickets.each(function(ticket) {
@@ -267,19 +232,18 @@ function show_login_dialog(info_title, info_msg) {
   });
 }
 
-// user's stuff
+// user's stuff ala not pollute style
 (function() {
   let form = document.querySelector('#login-form');
   let userButton = document.querySelector('.butUser');
-  let dialog = document.querySelector('#login-dialog');
   userButton.addEventListener('click', function() {
-    dialog.showModal();
+    login_dialog.showModal();
   });
-  dialog.querySelector('button.close')
+  login_dialog.querySelector('button.close')
   .addEventListener('click', function() {
-    dialog.close();
+    login_dialog.close();
   });
-  dialog.querySelector('button.ok')
+  login_dialog.querySelector('button.ok')
   // .addEventListener('click', myRequestResponseFunction('POST', domainUrl + 'logMe/', new FormData(form), {TOKEN: ''}, registerUser));
   .addEventListener('click', function(){
     myRequestResponseFunction('POST', domainUrl + 'logMe', new FormData(form), {TOKEN: ''}, registerUser);
@@ -289,14 +253,35 @@ function show_login_dialog(info_title, info_msg) {
 function registerUser(data) {
   if(data.login.token) {
     localStorage.setItem('token', data.login.token);
+    localStorage.setItem('id_user', data.login.id_personne);
+    id_user = data.login.id_personne;
+    updateUserIcon(true);
+    login_dialog.close();
   }
   else {
     localStorage.removeItem('token');
+    updateUserIcon(false);
   }
 }
 
+function updateUserIcon(status) {
+  if (status) {
+    document.querySelector('.UserIcon').classList.remove('mdl-color-text--grey-700');
+    document.querySelector('.UserIcon').classList.add('mdl-color-text--white-700');
+  }
+  else {
+    document.querySelector('.UserIcon').classList.remove('mdl-color-text--white-700');
+    document.querySelector('.UserIcon').classList.add('mdl-color-text--grey-700');
+  }
+}
+
+
+
+
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
+	// get all events
+  myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
@@ -309,7 +294,7 @@ function add_to_log(msg, type = 'info') {
   let i = document.createElement('i');
   let mt = document.createTextNode(msg);
   let it = document.createTextNode(type);
-  let ul = document.querySelector('#fixed-tab-3 ul');
+  let ul = document.querySelector('#fixed-tab-4 ul');
 
   li.classList.add('mdl-list__item');
   span.classList.add('mdl-list__item-primary-content');
@@ -363,11 +348,13 @@ function updateConnectionIcon(status) {
     document.querySelector('.ConnectionIcon').innerHTML = 'signal_cellular_off';
   }
 }
+
 if (navigator.onLine) {
   updateConnectionIcon(true);
 } else {
   updateConnectionIcon(false);
 }
+
 window.addEventListener('offline', function(e) { 
   updateConnectionIcon(false);
   add_to_log('app goes offline', 'signal_cellular_off');
