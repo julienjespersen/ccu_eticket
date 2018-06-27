@@ -1,5 +1,7 @@
 # Scanner de etickets
 
+![logo app CCU](images/icons/icon-256x256.png)
+
 Le Ciné-club universitaire (CCU) est une proposition culturelle organisée par des étudiants et d'anciens étudiants depuis plus de 60 ans. Les Activités culturelles de l'Université de Genève soutiennent le CCU au niveau financier, logistique et qualitativement. Chaque année académique le CCU organise 3 cycles de 12 films projetés au l'Auditorium Arditi (Place du Cirque 1, Genève).
 Jusqu'à aujourd'hui un caissier encaisse de l'argent liquide (en francs suisses) et remet en échange 3 types de billet papier: 1 entrée à 8.-, 3 entrées à 18.- ou un abonnement à 50.- pour l'ensemble du cycle.
 Un audit interne a pointé différents problèmes concernant les transaction sfinancières autour de l'achat des billets de cinéma. Par exemple:
@@ -54,7 +56,7 @@ jwt (non opérationel: CORS) (https://jwt.io/)
 ### scanner
 L'application pour scanner les billets, dans les mains de l'ouvreuse, est une simple page HTML, accessible par une URL. Seule les personnes authorisées peuvent recevoir et envoyer des données avec l'api. Une fois identifiée l'ouvreuse reçoit sur son smartphone la liste des spectateurs (et leur code respectif) attendu pour l'évenment choisi. Elle active la caméra du smartphone, une bibliothèque JS cherche dans le flux caméra à décoder un QRCode, s'il est reconnu il est comparé avec les données dans la DB locale, s'il le code est valide et légitime, un retour visuel et haptique indique à l'ouvreuse que le spectateur peut entrer dans la salle. À chaque cycle de l'application les données locales sont envoyées sur le serveur distant et les données de ce dernier sont récupérées.
 
-L'application est démarrée
+L'application est démarrée, le scanner a été activé, avec la caméra frontale
 
 ![scanner camera on](readme_rsc/scan_cam.png "app scanner démarrée")
 
