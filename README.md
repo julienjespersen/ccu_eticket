@@ -29,6 +29,7 @@ Une interface d'administrations des événements, notamment, des séances de cin
 Je l'ai complétée avec une vue de gestion des etickets, afin de les créer, de les supprimer, de les compter ou de les identifier.
 
 l'admin existe depuis des années, cependant je l'ai coomplétée afin qu'elle permette à l'administrateur de créer des etickets ou des les supprimer (invendus). 
+
 ![admin table screen](readme_rsc/admin_table_screen.png "liste des etickets pour un événement")
 
 ![admin rec screen](readme_rsc/admin_rec_screen.png "détail d'un ticket")
@@ -54,12 +55,15 @@ jwt (non opérationel: CORS) (https://jwt.io/)
 L'application pour scanner les billets, dans les mains de l'ouvreuse, est une simple page HTML, accessible par une URL. Seule les personnes authorisées peuvent recevoir et envoyer des données avec l'api. Une fois identifiée l'ouvreuse reçoit sur son smartphone la liste des spectateurs (et leur code respectif) attendu pour l'évenment choisi. Elle active la caméra du smartphone, une bibliothèque JS cherche dans le flux caméra à décoder un QRCode, s'il est reconnu il est comparé avec les données dans la DB locale, s'il le code est valide et légitime, un retour visuel et haptique indique à l'ouvreuse que le spectateur peut entrer dans la salle. À chaque cycle de l'application les données locales sont envoyées sur le serveur distant et les données de ce dernier sont récupérées.
 
 L'application est démarrée
+
 ![scanner camera on](readme_rsc/scan_cam.png "app scanner démarrée")
 
 L'application signale que le billet n'est plus valide - avec une pointe d'humour
+
 ![scanner message expired](readme_rsc/scan_msg_expired.png "app scanner indique un problème")
 
 L'ouvreuse peut consulter la liste des spectateurs déjà dans la salle et ceux qui pourraient encore venir
+
 ![scanner attendee list](readme_rsc/scan_attendee.png "app scanner liste des spéctateurs")
 
 
