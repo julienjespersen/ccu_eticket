@@ -22,7 +22,7 @@ Vu l'état du métier, vu l'état des outils existant et après discussion avec 
 - un REST api exposant la liste des billets aux personnes authorisées (l'équipe CCU)
 - une application permettant à l'ouvreuse des scanner les billets à l'entrée du cinéma.
 
-L'essentiel du dévellopement que soumet à évaulation porte sur ce dernier point. Ceci dit j'ai quand même dû réaliser tout ou partie de l'interface d'admin et de l'api pour que le "scanner" soit utilisable.
+L'essentiel du dévellopement que je soumet à évaulation porte sur ce dernier point. Ceci dit j'ai quand même dû réaliser tout ou partie de l'interface d'admin et de l'api pour que le "scanner" soit utilisable.
 
 ### admin
 Une interface d'administrations des événements, notamment, des séances de cinéma pour le Ciné-club universiatire existe depuis des années.
@@ -36,32 +36,44 @@ l'admin existe depuis des années, cependant je l'ai coomplétée afin qu'elle p
 Une CSS créée pour l'occasion permet à l'administrateur d'imprimer sur une imprimante de bureau des planches de tickets sur des feuilles prédécoupées. Ces tickets seront vendu directement sur place à l'entrée du cinéma.
 ![admin rec screen](readme_rsc/admin_table_print.png "planche de tickets à imprimer")
 
-
 #### techno
 php
 MySQL
 js
-qrjs2.js (pour générer les qrcode)
+qrjs2.js (pour générer les qrcode) (https://github.com/englishextra/qrjs2.git)
 css
 
 
 ### REsT api
 #### techno
 MySQL
-php (framework Slim3)
-jwt (non opérationel: CORS)
+php (framework Slim3) (https://www.slimframework.com/)
+jwt (non opérationel: CORS) (https://jwt.io/)
 
 ### scanner
+L'application pour scanner les billets, dans les mains de l'ouvreuse, est une simple page HTML, accessible par une URL. Seule les personnes authorisées peuvent recevoir et envoyer des données avec l'api. Une fois identifiée l'ouvreuse reçoit sur son smartphone la liste des spectateurs (et leur code respectif) attendu pour l'évenment choisi. Elle active la caméra du smartphone, une bibliothèque JS cherche dans le flux caméra à décoder un QRCode, s'il est reconnu il est comparé avec les données dans la DB locale, s'il le code est valide et légitime, un retour visuel et haptique indique à l'ouvreuse que le spectateur peut entrer dans la salle. À chaque cycle de l'application les données locales sont envoyées sur le serveur distant et les données de ce dernier sont récupérées.
+
+L'application est démarrée
+![scanner camera on](readme_rsc/scan_cam.png "app scanner démarrée")
+
+L'application signale que le billet n'est plus valide - avec une pointe d'humour
+![scanner message expired](readme_rsc/scan_msg_expired.png "app scanner indique un problème")
+
+L'ouvreuse peut consulter la liste des spectateurs déjà dans la salle et ceux qui pourraient encore venir
+![scanner attendee list](readme_rsc/scan_attendee.png "app scanner liste des spéctateurs")
+
+
 #### techno
-html
-css (material design)
+html + css (material design) (https://getmdl.io/components/index.html et https://github.com/google/material-design-lite)
 js (ec5)
-* instascan
-* dexie
+2 bibliothèques
+* instascan (https://github.com/schmich/instascan)
+* dexie (https://github.com/dfahlander/Dexie.js)
 #### fonctionalités
 login utilisateur
 scan qrcode via back ou front camera
 offline DB: IndexedDB
+retour haptique pour l'utilisatrice: vibreur
 
 
 
