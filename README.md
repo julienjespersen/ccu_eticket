@@ -22,7 +22,7 @@ Vu l'état du métier, vu l'état des outils existant et après discussion avec 
 - une interface d'administation permetant à au manager de créer et gérer les billets
 - un webshop permetaant aux spectateurs de pouvoir acheter des billets
 - un REST api exposant la liste des billets aux personnes authorisées (l'équipe CCU)
-- une application permettant à l'ouvreuse des scanner les billets à l'entrée du cinéma.
+- une application web permettant à l'ouvreuse des scanner les billets à l'entrée du cinéma grâce à un smartphone sous Android.
 
 L'essentiel du dévellopement que je soumet à évaulation porte sur ce dernier point. Ceci dit j'ai quand même dû réaliser tout ou partie de l'interface d'admin et de l'api pour que le "scanner" soit utilisable.
 
@@ -40,18 +40,18 @@ Une CSS créée pour l'occasion permet à l'administrateur d'imprimer sur une im
 ![admin rec screen](readme_rsc/admin_table_print.png "planche de tickets à imprimer")
 
 #### techno
-php
-MySQL
-js
-qrjs2.js (pour générer les qrcode) (https://github.com/englishextra/qrjs2.git)
-css
+* php
+* MySQL
+* js
+* qrjs2.js (pour générer les qrcode) (https://github.com/englishextra/qrjs2.git)
+* css
 
 
 ### REsT api
 #### techno
-MySQL
-php (framework Slim3) (https://www.slimframework.com/)
-jwt (non opérationel: CORS) (https://jwt.io/)
+* MySQL
+* php (framework Slim3) (https://www.slimframework.com/)
+* jwt (non opérationel: CORS) (https://jwt.io/)
 
 ### scanner
 L'application pour scanner les billets, dans les mains de l'ouvreuse, est une simple page HTML, accessible par une URL. Seule les personnes authorisées peuvent recevoir et envoyer des données avec l'api. Une fois identifiée l'ouvreuse reçoit sur son smartphone la liste des spectateurs (et leur code respectif) attendu pour l'évenment choisi. Elle active la caméra du smartphone, une bibliothèque JS cherche dans le flux caméra à décoder un QRCode, s'il est reconnu il est comparé avec les données dans la DB locale, s'il le code est valide et légitime, un retour visuel et haptique indique à l'ouvreuse que le spectateur peut entrer dans la salle. À chaque cycle de l'application les données locales sont envoyées sur le serveur distant et les données de ce dernier sont récupérées.
