@@ -12,6 +12,10 @@ if(localStorage.getItem('token')) {
   token = localStorage.getItem('token');
 }
 
+var time_short = 5000;
+var time_medium = 20000;
+var time_long = 60000;
+
 let code;
 var all_my_freaking_cameras = [];
 var cameras = [];
@@ -370,7 +374,8 @@ var nIntervId;
  
 function AppTimer(r) {
   if (r == 'play') {
-    nIntervId = setInterval(compare_storage, 5000);
+    nIntervId = setInterval(AppCycle, time_short);
+
 
   }
   else {
@@ -414,6 +419,18 @@ function AppButtons(param) {
   else {
     document.querySelector('.sec-btn').dislpay = 'none';
   }
+}
+
+function AppCycle() {
+  if (id_user) {
+    compare_storage();
+    AppConnect();
+    updateUserIcon(true);
+  }
+  else {
+    updateUserIcon(false);
+  }
+
 }
 
 

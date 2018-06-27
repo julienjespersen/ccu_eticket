@@ -71,15 +71,17 @@ L'ouvreuse peut consulter la liste des spectateurs déjà dans la salle et ceux 
 
 #### techno
 html + css (material design) (https://getmdl.io/components/index.html et https://github.com/google/material-design-lite)
-js (ec5)
-2 bibliothèques
+js (es5)
+2 bibliothèques:
 * instascan (https://github.com/schmich/instascan)
 * dexie (https://github.com/dfahlander/Dexie.js)
+
 #### fonctionalités
-login utilisateur
-scan qrcode via back ou front camera
-offline DB: IndexedDB
-retour haptique pour l'utilisatrice: vibreur
+* login utilisateur
+* scan qrcode via back ou front camera
+* interprétation d'un qrcode dans une image
+* offline DB: IndexedDB
+* retour haptique pour l'utilisatrice: vibreur
 
 
 
