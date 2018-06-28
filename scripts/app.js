@@ -22,6 +22,8 @@ var cameras = [];
 let my_camera;
 let my_camera_i = 1;
 
+var nIntervId;
+
 let opts;
 let scanner;
 
@@ -59,7 +61,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.11', 'settings');
+add_to_log('app version 0.0.12', 'settings');
 
 
 function compare_storage() {
@@ -76,20 +78,57 @@ function compare_storage() {
 
 }
 
-AppOnOff();
+// AppOnOff();
 
 
 function updateEventList(data) {
 
   console.log(data);
-  // data.each
-
-  // db.tickets.each(ticket => console.log(ticket.code));
-  // db.tickets.each(function(ticket) {
+  document.querySelector('#events-list').innerHTML = '';
+  // db.events.each(function(event) {
   //   // console.log(ticket.id_ticket);
-  //   createTicket(ticket);
-  // })
+  //   createEvent(event);
+  // });
 
+}
+
+
+function createEvent(ticket) {
+  if(document.querySelector('#t' + ticket.id_ticket)) {
+    document.querySelector('#t' + ticket.id_ticket).remove();
+  }
+  if(!ticket.date_stub) {
+    ticket.date_stub = '';
+  }
+  let li = document.createElement('li');
+  let span1 = document.createElement('span');
+  let span2 = document.createElement('span');
+  let i = document.createElement('i');
+  let mt = document.createTextNode(ticket.code);
+  let it = document.createTextNode('person');
+  
+  let ul = document.querySelector('#fixed-tab-2 ul');
+
+  li.classList.add('mdl-list__item', 'mdl-list__item--two-line', 'mdl-color--grey-100');
+  li.id = 't' + ticket.id_ticket;
+  span1.classList.add('mdl-list__item-primary-content');
+  span2.classList.add('mdl-list__item-secondary-content');
+  i.classList.add('material-icons', 'mdl-list__item-icon');
+
+
+  span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.date_stub + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.code + '</span>';
+  span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
+
+
+  // i.appendChild(it);
+  // span1.appendChild(i);
+  // span1.appendChild(mt);
+  li.appendChild(span1);
+  li.appendChild(span2);
+  // ul.insertBefore(li, ul.firstChild);
+  ul.insertBefore(li, ul.firstChild);
+
+  // ul.appendChild(li);
 }
 
 
@@ -99,6 +138,7 @@ function updateEventList(data) {
 
 function updateAttendeeList() {
   // db.tickets.each(ticket => console.log(ticket.code));
+  document.querySelector('#tracer_list').innerHTML = '';
   db.tickets.each(function(ticket) {
     // console.log(ticket.id_ticket);
     createTicket(ticket);
@@ -109,8 +149,8 @@ function updateAttendeeList() {
 }
 
 function createTicket(ticket) {
-  if(document.querySelector('t' + ticket.id_ticket)) {
-    document.querySelector('t' + ticket.id_ticket).remove();
+  if(document.querySelector('#t' + ticket.id_ticket)) {
+    document.querySelector('#t' + ticket.id_ticket).remove();
   }
   if(!ticket.date_stub) {
     ticket.date_stub = '';
@@ -370,17 +410,13 @@ window.addEventListener('online', function(e) {
   
 });
 
-var nIntervId;
  
 function AppTimer(r) {
   if (r == 'play') {
     nIntervId = setInterval(AppCycle, time_short);
-
-
   }
   else {
     clearInterval(nIntervId);
-
   }
 }
 
@@ -422,17 +458,16 @@ function AppButtons(param) {
 }
 
 function AppCycle() {
-  if (id_user) {
-    compare_storage();
-    AppConnect();
-    updateUserIcon(true);
+  if(localStorage.getItem('app_state', 1)) {
+    if (id_user) {
+      compare_storage();
+      AppConnect();
+      updateUserIcon(true);
+    }
+    else {
+      updateUserIcon(false);
+    }
   }
-  else {
-    updateUserIcon(false);
-  }
-
 }
 
-
-
-window.addEventListener('load', AppOnOff());
+window.addEventListener('load', AppCycle());

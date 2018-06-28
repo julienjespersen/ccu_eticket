@@ -1,11 +1,33 @@
 var db = new Dexie("eticket");
 db.version(1).stores({
-    tickets: '++code'
+	tickets: '++code',
+	events: 'id_prestation'
 });
+db.open().catch(function (e) {
+    console.error("Open failed: " + e.stack);
+})
 
 
+function db_synchro_events(data) {
+    db.events.clear();
+	// updateAttendeeList();
+
+    db.events.bulkPut(data.data).then(function(lastKey) {
+        console.log('done: ' + lastKey); 
+    }).catch(Dexie.BulkError, function (e) {
+        console.error ('error while injecting into db');
+	})
+	.then(function(){
+		console.log('date_remote_update: ' + date_update.toISOString());
+		localStorage.setItem('date_remote_update', date_update.toISOString());
+		add_to_log('feed response @ ' + date_update.toISOString(), 'cloud_download');
+		// updateAttendeeList();
+	});
+	
+}
 function db_synchro(data) {
-    
+    // db.tickets.clear();
+	// updateAttendeeList();
 
     db.tickets.bulkPut(data.data).then(function(lastKey) {
         console.log('done: ' + lastKey); 
