@@ -75,7 +75,15 @@ L'ouvreuse peut consulter la liste des spectateurs déjà dans la salle et ceux 
     - instascan (https://github.com/schmich/instascan)
     - dexie (https://github.com/dfahlander/Dexie.js)
 
+J'ai pris le parti de ne pas construire une application "native" pour la plateforme Android ou IOS. D'une part ce n'est pas rationel car il faut dévelloper et maintenir 2 veriosns de la même application, ensuite c'est contraignant, il faut payer, s'identifier ou se conformer à des règles légales pour utiliser les magasins d'applications (AppStore ou Google Play) pour distribuer son application.
+Par ailleurs, le développement des HTML APIs connait un grand essort ces derniers temps. Concrètement une page web peut directement interagir avec le gyroscope, le vibreur, la caméra ou encore le mode on/offline de l'appareil sur lequel elle se trouve: p. ex. votre smartphone.
+Un autre avantage: pas d'installation nécéssaire.
+La bibliothèque Material Design Light donne un look and feel très proche d'une application native. Les bibliothèques annexes me permettent d'accéder à la caméra et au stockage des données dans le navigateur. J'ai ainsi suffisement de fonctionnalités pour construire une application minimal qui répond aux besoins du Ciné-club universiatire.
 
+
+#### outils
+- outil de versioning avec dépot: git (https://github.com/julienjespersen/ccu_eticket)
+- editeur de text: Visual Studio Code. Avec syntax highlighting, autocompletion et built-in git commands
 
 
 #### fonctionalités
