@@ -1,7 +1,18 @@
-# Scanner de etickets
+# Scanner de etickets développé selon le principe de PWA
 
 ![logo app CCU](images/icons/icon-256x256.png)
 
+Demo:
+[CCU eTicket demo](https://julienjespersen.github.io/ccu_eticket/)
+
+#### remarques
+L'architecture générale de l'application (décrite plus loin) utilise les caratéristique d'un Progressive Web Apps (PWA) https://en.wikipedia.org/wiki/Progressive_Web_Apps . Cependant, il est assez compliquer d'activer, d'être parfaitement conforme à ces principes, étant encore en phasse de développement. Aussi pour tester sur un smartphone, veuillez noter que:
+- fonctionne uniquement sur Android
+- n'a été testée que sur Chrome (ou navigateurs utilsants webkit)
+- lors des essais, préférez la navigation privée (le cache est mieux purgé à chaque essai)
+- les avantages d'un PWA fonctionnent pas ou mal car l'application est servie depuis le dépot Github. P. ex. la fonction "add to home screen"
+
+#### introduction
 Le Ciné-club universitaire de Genève (CCU) est une manifestation culturelle organisée par des étudiants et d'anciens étudiants depuis plus de 60 ans. Les Activités culturelles de l'Université de Genève soutiennent le CCU au niveau financier, logistique et qualitatif. Chaque année académique, le CCU organise 3 cycles de 10-12 films projetés à l'Auditorium Arditi (Place du Cirque, Genève).
 Jusqu'à aujourd'hui, un caissier encaisse de l'argent liquide (en francs suisses) et remet en échange 3 types de billets papier: 1 entrée à 8.-, 3 entrées à 18.- ou un abonnement à 40 ou 50.- pour l'ensemble du cycle (pour 10 ou 12 séances).
 Un audit interne de l'UNIGE a pointé différents problèmes concernant les transactions financières autour de l'achat des billets de cinéma. Par exemple:
@@ -26,7 +37,7 @@ Vu l'état du métier, l'état des outils existants et après discussion avec le
 
 L'essentiel du développement que je soumets à évaluation porte sur ce dernier point. Ceci dit, j'ai quand même dû réaliser l'entier ou une partie de l'interface d'admin et de l'api pour que le "scanner" soit utilisable.
 
-### admin
+## admin
 Une interface d'administration des événements, notamment des séances de cinéma pour le Ciné-club universitaire, existe depuis des années.
 Je l'ai complétée avec une vue de gestion des etickets, afin de les créer, de les supprimer, de les compter ou de les identifier.
 
@@ -43,7 +54,7 @@ Une CSS créée pour l'occasion permet à l'administrateur d'imprimer sur une im
 - php
 - MySQL
 - js
-- qrjs2.js (pour générer les qrcode) (https://github.com/englishextra/qrjs2.git)
+- qrjs2.js (pour générer les QR codes) (https://github.com/englishextra/qrjs2.git)
 - css
 
 
@@ -53,7 +64,7 @@ Une CSS créée pour l'occasion permet à l'administrateur d'imprimer sur une im
 - php (framework Slim3) (https://www.slimframework.com/)
 - jwt (non opérationel: CORS) (https://jwt.io/)
 
-### scanner
+## scanner
 L'application pour scanner les billets, dans les mains de l'ouvreuse, est une simple page HTML, accessible par une URL. Seules les personnes autorisées peuvent recevoir et envoyer des données avec l'api. Une fois identifiée, l'ouvreuse reçoit sur son smartphone la liste des spectateurs (et leurs codes respectifs) attendue pour l'événement choisi. Elle active la caméra du smartphone, une bibliothèque JS cherche alors dans le flux caméra à décoder un QRCode; s'il est reconnu, il est comparé avec les données dans la DB locale; si le code est valide et légitime, un retour visuel et haptique indique à l'ouvreuse que le spectateur peut entrer dans la salle. À chaque cycle de l'application, les données locales sont envoyées sur le serveur distant et les données de ce dernier sont récupérées.
 
 L'application est démarrée, le scanner a été activé avec la caméra frontale du smartphone.
@@ -100,5 +111,15 @@ C'est pourquoi l'application tourne sur un cycle de 5 secondes, ce qui me paraî
 Nous n'avons pas retenu de mécanisme fonctionnel qui irait chercher une fois pour toute un lot de billets potentiels (achetés ou non) et qui permettrait à l'ouvreuse de valider tous les billets possibles même sans aucune connectivité. En effet ce scénario empêcherait le travail en parallèle. Un billet oblitéré auprès d'une ouvreuse serait encore valide auprès d'une autre. Selon les situations et selon le taux de fréquentation, il est tout à fait possible qu'il y ait plusieurs personnes au contrôle des billets. 
 
 
-### ticket shop
-à faire pour septembre
+## webshop
+En ligne pour septembre 2018
+
+
+
+## remarques
+- Pour les besoins de démonstration, aucun login n'est nécéssaire
+- Une planche de tickets en PDF est fournie à titre d'exemple
+- La voie de retour (mise à jour des données en POST) n'est pas implémentée afin de pour voir tester librement et pourvoir réinitialiser l'application dans son état d'origine
+- le menu ne contient aucun lien fonctionnel, il est là à titre d'exemple. Des phases d'UX nous diront s'il devrait être utilisé ou non
+
+## 
