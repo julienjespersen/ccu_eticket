@@ -121,12 +121,15 @@ Nous n'avons pas retenu de mécanisme fonctionnel qui irait chercher une fois po
 ## Webshop
 En ligne pour septembre 2018
 
-
-
 ## Remarques finales
 - Pour les besoins de démonstration, aucun login n'est nécéssaire
 - Une planche de tickets en PDF est fournie à titre d'exemple (readme_rsc/admin_table_tickets-mozaic.pdf)
 - La voie de retour (mise à jour des données en POST) n'est pas implémentée afin de pour voir tester librement et pourvoir réinitialiser l'application dans son état d'origine
 - le menu ne contient aucun lien fonctionnel, il est là à titre d'exemple. Des phases d'UX nous diront s'il devrait être utilisé ou non
 
-## 
+## Références
+Progressive Web Apps (Wikipedia) [Page Web] https://en.wikipedia.org/wiki/Progressive_Web_Apps , 2018-06-29
+Progressive Web Apps (Google) [Page Web] https://developers.google.com/web/progressive-web-apps/ , 2018-06-29
+Fahlander, David, Dexies.js Docs [Page Web] http://dexie.org/docs/ , 2018-06-29
+Bar, Adam, What Web Can Do Today [Page Web] https://whatwebcando.today/ , 2018-06-29
+Deveria, Alexis, Can I use [Page Web] https://caniuse.com/ 2018-06-29
