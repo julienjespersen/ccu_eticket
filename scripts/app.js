@@ -324,8 +324,8 @@ function updateUserIcon(status) {
 
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
-	// get all events
-  myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
+	// get all events (disconnected for demo purpose)
+  // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
