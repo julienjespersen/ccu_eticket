@@ -128,8 +128,8 @@ En ligne pour septembre 2018
 - le menu ne contient aucun lien fonctionnel, il est là à titre d'exemple. Des phases d'UX nous diront s'il devrait être utilisé ou non
 
 ## Références
-Progressive Web Apps (Wikipedia) [Page Web] https://en.wikipedia.org/wiki/Progressive_Web_Apps , 2018-06-29
-Progressive Web Apps (Google) [Page Web] https://developers.google.com/web/progressive-web-apps/ , 2018-06-29
-Fahlander, David, Dexies.js Docs [Page Web] http://dexie.org/docs/ , 2018-06-29
-Bar, Adam, What Web Can Do Today [Page Web] https://whatwebcando.today/ , 2018-06-29
-Deveria, Alexis, Can I use [Page Web] https://caniuse.com/ 2018-06-29
+- Progressive Web Apps (Wikipedia) [Page Web] https://en.wikipedia.org/wiki/Progressive_Web_Apps , 2018-06-29
+- Progressive Web Apps (Google) [Page Web] https://developers.google.com/web/progressive-web-apps/ , 2018-06-29
+- Fahlander, David, Dexies.js Docs [Page Web] http://dexie.org/docs/ , 2018-06-29
+- Bar, Adam, What Web Can Do Today [Page Web] https://whatwebcando.today/ , 2018-06-29
+- Deveria, Alexis, Can I use [Page Web] https://caniuse.com/ 2018-06-29
