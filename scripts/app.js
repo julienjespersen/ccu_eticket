@@ -320,7 +320,14 @@ function updateUserIcon(status) {
 }
 
 
-
+function GrantAccess(access = false) {
+  if (access) {
+    db_synchro;
+  }
+  else {
+		add_to_log('you need to login!', 'power_settings_new');
+  }
+}
 
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
@@ -328,7 +335,6 @@ function AppConnect(YesNo) {
   // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
-
 }
 
 
@@ -407,7 +413,6 @@ window.addEventListener('offline', function(e) {
 window.addEventListener('online', function(e) { 
   updateConnectionIcon(true);
   add_to_log('app goes online', 'signal_cellular_4_bars');
-  
 });
 
  
