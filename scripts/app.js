@@ -320,7 +320,7 @@ function updateUserIcon(status) {
 }
 
 
-function GrantAccess(access = false) {
+function grantAccess(access = false) {
   if (access) {
     db_synchro;
   }
@@ -334,7 +334,7 @@ function AppConnect(YesNo) {
 	// get all events (disconnected for demo purpose)
   // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
-  myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
+  myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, grantAccess);
 }
 
 
