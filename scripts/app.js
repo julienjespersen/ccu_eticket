@@ -61,7 +61,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.12', 'settings');
+add_to_log('app version 0.0.13', 'settings');
 
 
 function compare_storage() {
