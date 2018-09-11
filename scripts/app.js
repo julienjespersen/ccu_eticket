@@ -38,6 +38,20 @@ var date_device = new Date();
 var date_update = new Date();
 
 
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../service-worker.js', {scope: 'sw-test'}).then(function(registration) {
+    // registration worked
+    console.log('Registration succeeded.');
+    registration.unregister().then(function(boolean) {
+      // if boolean = true, unregister is successful
+    });
+  }).catch(function(error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+};
+
 Instascan.Camera.getCameras().then(function (cameras) {
   let mirror = false;
   if (cameras.length == 2) {
