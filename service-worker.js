@@ -1,10 +1,11 @@
 const baseURL = '/ccu_eticket';
-var cacheName = 'ccu_eticket_002';
+var cacheName = 'ccu_eticket_003';
 var dataCacheName = 'ccu_et_Data-v2';
 var filesToCache = [
     baseURL + '/',
     baseURL + '/index.html',
-    baseURL + '/scripts/app.js',
+    // baseURL + '/scripts/app.js',
+    // baseURL + '/scripts/dbsync.js',
     baseURL + '/scripts/instascan.min.js',
     baseURL + '/styles/inline.css',
   ];
