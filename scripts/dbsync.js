@@ -35,6 +35,11 @@ function db_synchro(data) {
         console.error ('error while injecting into db');
 	})
 	.then(function(){
+		// var utcDate1 = new Date(Date.UTC());
+		// console.log('local UTC date: ' + utcDate1.toISOString());
+		var utc_ts = new Date();
+		console.log(  Math.floor(utc_ts.getTime() / 1000)  ); //new Date().getTime() / 1000);
+		// console.log(Date.now);
 		console.log('date_remote_update: ' + date_update.toISOString());
 		localStorage.setItem('date_remote_update', date_update.toISOString());
 		add_to_log('feed response @ ' + date_update.toISOString(), 'cloud_download');
@@ -86,9 +91,9 @@ function update_reccord(reccord_obj) {
 // function to fetch and feed content from and to the rest api 
 function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'world'}, headers_obj = {'TOKEN': 'hello from header'}, callBackFunction) {
 	// for GET or DELETE method no need of a body
-	if (!response.ok) {
-		return false;
-	}
+	// if (!response.ok) {
+	// 	return false;
+	// }
 	if (method_str == 'GET' || method_str == 'DELETE') {
 		var fetchParams = {
 			method: method_str
@@ -107,6 +112,12 @@ function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'worl
 	.catch(error => console.error('Error:', error))
 	.then(function(response) {
 		return response.json(); 
+		// if (response.ok) {
+		// 	return response.json(); 
+		// }
+		// else {
+		// 	return response.headers;
+		// }
 		// return response; 
 	})
 	// .then(function(data) {
