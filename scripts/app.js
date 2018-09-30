@@ -41,6 +41,20 @@ var date_device = new Date();
 var date_update = new Date();
 
 
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js', {scope: 'sw-test'}).then(function(registration) {
+    // registration worked
+    console.log('Registration succeeded.');
+    registration.unregister().then(function(boolean) {
+      // if boolean = true, unregister is successful
+    });
+  }).catch(function(error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+};
+
 Instascan.Camera.getCameras().then(function (cameras) {
   let mirror = false;
   if (cameras.length == 2) {
@@ -346,12 +360,19 @@ function updateUserIcon(status) {
 }
 
 
-
+function grantAccess(access = false) {
+  if (access) {
+    db_synchro;
+  }
+  else {
+		add_to_log('you need to login!', 'power_settings_new');
+  }
+}
 
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
-	// get all events
-  myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
+	// get all events (disconnected for demo purpose)
+  // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   // myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
@@ -433,7 +454,6 @@ window.addEventListener('offline', function(e) {
 window.addEventListener('online', function(e) { 
   updateConnectionIcon(true);
   add_to_log('app goes online', 'signal_cellular_4_bars');
-  
 });
 
  
