@@ -4,9 +4,12 @@ if(localStorage.getItem('id_user')) {
   id_user = localStorage.getItem('id_user');
 }
 var id_event = 9985;
+var inputPrestNum = document.querySelector('#inputPrestNum');
 if(localStorage.getItem('id_event')) {
   id_event = localStorage.getItem('id_event');
 }
+inputPrestNum.value = id_event;
+
 var token = '';
 if(localStorage.getItem('token')) {
   token = localStorage.getItem('token');
@@ -52,7 +55,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
   }
   scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: mirror  }).addListener('scan', function (content) {
     code = content;
-    console.log(content);
+    // console.log(content);
     count_record(content);
     cam_start(false);
   });
@@ -61,10 +64,10 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.12', 'settings');
+add_to_log('app version 0.0.14', 'settings');
 
 
-function compare_storage() {
+function CompareStorage() {
   if(localStorage.getItem('date_remote_update')) {
     let ttlu = parseInt((Date.now() - date_device.getTime(localStorage.getItem('date_remote_update'))) / 1000);
     // console.log('device time: ' + Date.now());
@@ -83,7 +86,7 @@ function compare_storage() {
 
 function updateEventList(data) {
 
-  console.log(data);
+  // console.log(data);
   document.querySelector('#events-list').innerHTML = '';
   // db.events.each(function(event) {
   //   // console.log(ticket.id_ticket);
@@ -209,7 +212,7 @@ function after_count(count) {
   }
 }
 function after_fetch(reccord_obj) {
-  if(reccord_obj.count_total - reccord_obj.count_stub) {
+  if(reccord_obj.count_total - reccord_obj.count_stub > 0) {
     update_reccord(reccord_obj);
 
   }
@@ -231,10 +234,12 @@ function feedback_bg(okfail) {
   let main = document.querySelector('main');
   let the_class;
   if (okfail) {
-    the_class = 'mdl-color--green-700';
+    // the_class = 'mdl-color--green-700';
+    the_class = 'bg_ok';
   }
   else {
-   the_class = 'mdl-color--red-700';
+  //  the_class = 'mdl-color--red-700';
+   the_class = 'bg_notok';
   }
   main.classList.remove('mdl-color--grey-700');
   main.classList.add(the_class);
@@ -275,6 +280,15 @@ function show_login_dialog(info_title, info_msg) {
     dialog.close();
   });
 }
+function show_id_prest_dialog(info_title, info_msg) {
+  let dialog = document.querySelector('#id_prest-dialog');
+  dialog.querySelector('h4').innerHTML = info_title;
+  dialog.querySelector('p').innerHTML = info_msg;
+  dialog.showModal();
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+}
 
 // user's stuff ala not pollute style
 (function() {
@@ -294,6 +308,15 @@ function show_login_dialog(info_title, info_msg) {
   });
 }());
 
+(function() {
+  let btnClearAtt = document.querySelector('#btnClearAtt');
+  btnClearAtt.addEventListener('click', function() {
+    clear_tickets();
+  });
+}());
+
+
+
 function registerUser(data) {
   if(data.login.token) {
     localStorage.setItem('token', data.login.token);
@@ -304,6 +327,7 @@ function registerUser(data) {
   }
   else {
     localStorage.removeItem('token');
+    localStorage.removeItem('id_user');
     updateUserIcon(false);
   }
 }
@@ -312,10 +336,12 @@ function updateUserIcon(status) {
   if (status) {
     document.querySelector('.UserIcon').classList.remove('mdl-color-text--grey-700');
     document.querySelector('.UserIcon').classList.add('mdl-color-text--white-700');
+    add_to_log('User logged in', 'face');
   }
   else {
     document.querySelector('.UserIcon').classList.remove('mdl-color-text--white-700');
     document.querySelector('.UserIcon').classList.add('mdl-color-text--grey-700');
+    add_to_log('User logged out', 'face');
   }
 }
 
@@ -327,7 +353,7 @@ function AppConnect(YesNo) {
 	// get all events
   myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
-  myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
+  // myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
 }
 
@@ -434,6 +460,7 @@ function AppOnOff() {
     localStorage.setItem('app_state', 0);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-100');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--grey-700');
+    document.querySelector('#on-off-txt').style.display = 'flex';
     add_to_log('app stopped', 'stop');
   }
   else {
@@ -444,23 +471,38 @@ function AppOnOff() {
     localStorage.setItem('app_state', 1);
     document.querySelector('.ButtonPower i').classList.remove('mdl-color-text--grey-700');
     document.querySelector('.ButtonPower i').classList.add('mdl-color-text--green-500');
+    document.querySelector('#on-off-txt').style.display = 'none';
     add_to_log('app started', 'play_arrow');
   }
 }
 
 function AppButtons(param) {
   if(param) {
-    document.querySelector('.sec-btn').dislpay = 'bloc';
+    document.querySelector('.sec-btn').dislpay = 'block';
   }
   else {
     document.querySelector('.sec-btn').dislpay = 'none';
   }
 }
+function AfterFetchAllReccords(data) {
+
+  console.log(data);
+
+}
+
+function SendData() {
+
+  post_all_reccords();
+
+  // myRequestResponseFunction('POST', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
+
+}
 
 function AppCycle() {
   if(localStorage.getItem('app_state', 1)) {
     if (id_user) {
-      compare_storage();
+      // CompareStorage();
+      SendData();
       AppConnect();
       updateUserIcon(true);
     }

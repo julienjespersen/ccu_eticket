@@ -28,7 +28,7 @@
         "scripts/instascan.min.js",
         "scripts/dexie.min.js"
       ]},
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#616161",
   "theme_color": "#212121"

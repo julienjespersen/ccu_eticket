@@ -1,5 +1,7 @@
 .butOnOff {
-  position: fixed;
+  /* position: fixed; */
+  display: flex;
+  margin-top: 3em;
   top: 33%;
 }
 .cam-btn-container {
@@ -26,4 +28,21 @@ main {
 
 #user-profile {
   display: none;
+}
+
+.bg_notok {
+  background: red no-repeat 50% url(../images/notok.png);
+}
+.bg_ok {
+  background: lime no-repeat 50% url(../images/ok.png);
+}
+#on-off-txt h4 {
+  margin-bottom: 0em;
+}
+#on-off-txt h4 i {
+  color: yellow;
+}
+#on-off-txt p {
+  text-align: center;
+  margin: 0em 3em;
 }
