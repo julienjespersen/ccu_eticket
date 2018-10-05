@@ -30,6 +30,7 @@ function db_synchro_events(data) {
 
 
 function db_synchro(data) {
+	let new_date = new Date();
     // db.tickets.clear();
 	// updateAttendeeList();
 	// data.data.forEach(function(ticket) {
@@ -55,9 +56,10 @@ function db_synchro(data) {
         console.error ('error while injecting into db');
 	})
 	.then(function(){
-		console.log('date_remote_update: ' + date_update.toISOString());
+		// console.log('date_remote_update: ' + date_update.toISOString());
 		localStorage.setItem('date_remote_update', date_update.toISOString());
-		add_to_log('feed response @ ' + date_update.toISOString(), 'cloud_download');
+		add_to_log('last update @ ' + new_date.toISOString(), 'cloud_download');
+		add_to_log('remote date is ' + date_update.toISOString(), 'cloud_download');
 		updateAttendeeList();
 	});
 }
@@ -131,9 +133,6 @@ function update_reccord(reccord_obj) {
 // function to fetch and feed content from and to the rest api 
 function myRequestResponseFunction(method_str, url_str, body_obj = {hello: 'world'}, headers_obj = {'TOKEN': 'hello from header'}, callBackFunction) {
 	// for GET or DELETE method no need of a body
-	if (!response.ok) {
-		return false;
-	}
 	if (method_str == 'GET' || method_str == 'DELETE') {
 		var fetchParams = {
 			method: method_str

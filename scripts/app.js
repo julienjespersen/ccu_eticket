@@ -40,20 +40,8 @@ let vibrate_alert = [300, 100, 300, 100, 300];
 var date_device = new Date();
 var date_update = new Date();
 
-
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js', {scope: 'sw-test'}).then(function(registration) {
-    // registration worked
-    console.log('Registration succeeded.');
-    registration.unregister().then(function(boolean) {
-      // if boolean = true, unregister is successful
-    });
-  }).catch(function(error) {
-    // registration failed
-    console.log('Registration failed with ' + error);
-  });
-};
+// let zi = 0;
+// localStorage.setItem('tickets_count', zi);
 
 Instascan.Camera.getCameras().then(function (cameras) {
   let mirror = false;
@@ -78,7 +66,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.14', 'settings');
+add_to_log('app version 0.0.15', 'settings');
 
 
 function CompareStorage() {
@@ -154,15 +142,21 @@ function createEvent(ticket) {
 
 
 function updateAttendeeList() {
+  // zi = 0;
   // db.tickets.each(ticket => console.log(ticket.code));
   document.querySelector('#tracer_list').innerHTML = '';
   db.tickets.each(function(ticket) {
     // console.log(ticket.id_ticket);
     createTicket(ticket);
-  })
+    
+//   console.log(zi);
+  });
+
+  
   // db.tickets.get().then (function (all) {
   //   console.log(all);
   // });
+  
 }
 
 function createTicket(ticket) {
@@ -174,7 +168,7 @@ function createTicket(ticket) {
   }
   let li = document.createElement('li');
   let span1 = document.createElement('span');
-  let span2 = document.createElement('span');
+  // let span2 = document.createElement('span');
   let i = document.createElement('i');
   let mt = document.createTextNode(ticket.code);
   let it = document.createTextNode('person');
@@ -184,23 +178,26 @@ function createTicket(ticket) {
   li.classList.add('mdl-list__item', 'mdl-list__item--two-line', 'mdl-color--grey-100');
   li.id = 't' + ticket.id_ticket;
   span1.classList.add('mdl-list__item-primary-content');
-  span2.classList.add('mdl-list__item-secondary-content');
+  // span2.classList.add('mdl-list__item-secondary-content');
   i.classList.add('material-icons', 'mdl-list__item-icon');
 
 
-  span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.date_stub + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.code + '</span>';
-  span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
+  // span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span>';
+  span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span><span class="mdl-list__item-sub-title">' + ticket.nom + '</span>';
+  // span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
 
 
   // i.appendChild(it);
   // span1.appendChild(i);
   // span1.appendChild(mt);
   li.appendChild(span1);
-  li.appendChild(span2);
+  // li.appendChild(span2);
   // ul.insertBefore(li, ul.firstChild);
   ul.insertBefore(li, ul.firstChild);
 
   // ul.appendChild(li);
+  // zi++;
+
 }
 
 
@@ -215,7 +212,7 @@ function after_count(count) {
     document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
       message: 'NOT (unknown)',
       actionHandler: function(event) {
-        show_dialog('Unknown code number!', 'This code number (' + code + ') doesn\'t exists in the system. Please escort the offender toward the security officer ;)' )
+        show_dialog('Unknown code number!', 'This code number (' + code + ') doesn\'t exists in the system.' )
       },
       actionText: 'Why?',
       timeout: 5000
@@ -234,7 +231,7 @@ function after_fetch(reccord_obj) {
     document.querySelector('#demo-toast-example').MaterialSnackbar.showSnackbar({
       message: 'NOT (expired)',
       actionHandler: function(event) {
-        show_dialog('Expired ticket!', 'This ticket (' + code + ') is no longer valid for this event. Please escort the offender toward the security officer ;)' )
+        show_dialog('Expired ticket!', 'This ticket (' + code + ') is no longer valid for this event.' )
       },
       actionText: 'Why?',
       timeout: 5000
@@ -271,6 +268,7 @@ function after_update(ticket) {
   feedback_bg(true);
   createTicket(ticket);
   console.log('kes tu fou!');
+  SendData();
 }
 
 
@@ -329,6 +327,13 @@ function show_id_prest_dialog(info_title, info_msg) {
   });
 }());
 
+(function() {
+  let btnPrestNum = document.querySelector('#btnPrestNum');
+  btnPrestNum.addEventListener('click', function() {
+    id_event = inputPrestNum.value;
+    localStorage.setItem('id_event', id_event);
+  });
+}());
 
 
 function registerUser(data) {
@@ -360,19 +365,12 @@ function updateUserIcon(status) {
 }
 
 
-function grantAccess(access = false) {
-  if (access) {
-    db_synchro;
-  }
-  else {
-		add_to_log('you need to login!', 'power_settings_new');
-  }
-}
+
 
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
-	// get all events (disconnected for demo purpose)
-  // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
+	// get all events
+  myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   // myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
@@ -454,6 +452,7 @@ window.addEventListener('offline', function(e) {
 window.addEventListener('online', function(e) { 
   updateConnectionIcon(true);
   add_to_log('app goes online', 'signal_cellular_4_bars');
+  
 });
 
  
