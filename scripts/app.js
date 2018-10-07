@@ -152,7 +152,11 @@ function updateAttendeeList() {
 //   console.log(zi);
   });
 
-  
+  // db.tickets.where('count_stub').above(0).sortBy('count_stub');
+  // test = db.tickets.orderBy('id_ticket');
+  // console.log(test);
+  // db_sort_count();
+ 
   // db.tickets.get().then (function (all) {
   //   console.log(all);
   // });
@@ -161,40 +165,43 @@ function updateAttendeeList() {
 
 function createTicket(ticket) {
   if(document.querySelector('#t' + ticket.id_ticket)) {
-    document.querySelector('#t' + ticket.id_ticket).remove();
+    // document.querySelector('#t' + ticket.id_ticket).remove();
   }
-  if(!ticket.date_stub) {
-    ticket.date_stub = '';
-  }
-  let li = document.createElement('li');
-  let span1 = document.createElement('span');
-  // let span2 = document.createElement('span');
-  let i = document.createElement('i');
-  let mt = document.createTextNode(ticket.code);
-  let it = document.createTextNode('person');
+  else {
+    if(!ticket.date_stub) {
+      ticket.date_stub = 'no date';
+    }
+    let li = document.createElement('li');
+    let span1 = document.createElement('span');
+    // let span2 = document.createElement('span');
+    let i = document.createElement('i');
+    let mt = document.createTextNode(ticket.code);
+    let it = document.createTextNode('person');
+    
+    let ul = document.querySelector('#fixed-tab-2 ul');
   
-  let ul = document.querySelector('#fixed-tab-2 ul');
-
-  li.classList.add('mdl-list__item', 'mdl-list__item--two-line', 'mdl-color--grey-100');
-  li.id = 't' + ticket.id_ticket;
-  span1.classList.add('mdl-list__item-primary-content');
-  // span2.classList.add('mdl-list__item-secondary-content');
-  i.classList.add('material-icons', 'mdl-list__item-icon');
-
-
-  // span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span>';
-  span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span><span class="mdl-list__item-sub-title">' + ticket.nom + '</span>';
-  // span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
-
-
-  // i.appendChild(it);
-  // span1.appendChild(i);
-  // span1.appendChild(mt);
-  li.appendChild(span1);
-  // li.appendChild(span2);
-  // ul.insertBefore(li, ul.firstChild);
-  ul.insertBefore(li, ul.firstChild);
-
+    li.classList.add('mdl-list__item', 'mdl-list__item--two-line',  'tcat' + ticket.count_total);
+    li.id = 't' + ticket.id_ticket;
+    span1.classList.add('mdl-list__item-primary-content');
+    // span2.classList.add('mdl-list__item-secondary-content');
+    i.classList.add('material-icons', 'mdl-list__item-icon');
+  
+  
+    // span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.nom + '</span><span class="mdl-list__item-sub-title">' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span>';
+    span1.innerHTML = '<i class="material-icons mdl-list__item-icon">person</i><span>' + ticket.id_ticket + ' • ' + ticket.count_stub + '/' + ticket.count_total + ' • ' + ticket.date_stub + '</span><span class="mdl-list__item-sub-title">' + ticket.nom + '</span>';
+    // span2.innerHTML = '<span class="mdl-list__item-secondary-info">' + ticket.id_ticket + '</span><span class="mdl-list__item-secondary-info"><i class="material-icons">check</i></span>';
+  
+  
+    // i.appendChild(it);
+    // span1.appendChild(i);
+    // span1.appendChild(mt);
+    li.appendChild(span1);
+    // li.appendChild(span2);
+    // ul.insertBefore(li, ul.firstChild);
+    ul.insertBefore(li, ul.firstChild);
+  
+  }
+  
   // ul.appendChild(li);
   // zi++;
 
@@ -320,6 +327,12 @@ function show_id_prest_dialog(info_title, info_msg) {
   });
 }());
 
+(function() {
+  let btnShowTickets = document.querySelector('#btnShowTickets');
+  btnShowTickets.addEventListener('click', function() {
+    updateAttendeeList();
+  });
+}());
 (function() {
   let btnClearAtt = document.querySelector('#btnClearAtt');
   btnClearAtt.addEventListener('click', function() {
@@ -522,7 +535,7 @@ function AppCycle() {
     if (id_user) {
       // CompareStorage();
       SendData();
-      AppConnect();
+      // AppConnect();
       updateUserIcon(true);
     }
     else {

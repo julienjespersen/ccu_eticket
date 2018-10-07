@@ -1,6 +1,6 @@
 var db = new Dexie("eticket");
 db.version(1).stores({
-	tickets: '++code',
+	tickets: 'code, id_ticket',
 	events: 'id_prestation'
 });
 db.open().catch(function (e) {
@@ -26,7 +26,6 @@ function db_synchro_events(data) {
 	
 }
 
-// function 
 
 
 function db_synchro(data) {
@@ -60,7 +59,7 @@ function db_synchro(data) {
 		localStorage.setItem('date_remote_update', date_update.toISOString());
 		add_to_log('last update @ ' + new_date.toISOString(), 'cloud_download');
 		add_to_log('remote date is ' + date_update.toISOString(), 'cloud_download');
-		updateAttendeeList();
+		// updateAttendeeList();
 	});
 }
 
@@ -82,19 +81,37 @@ function clear_tickets() {
 		updateAttendeeList(),
 		add_to_log('All ticket deleted from local storage @ ' + date_update.toISOString(), 'delete')
 	  );
-  }
-  
+}
+
+
+
+function db_sort_count(callBackFunction) {
+
+	let page = db.tickets
+	.orderBy('id_ticket')
+	.toArray();
+
+	add_to_log('array: ' + page);
+
+	// db.tickets.sortBy('id_ticket', friend => add_to_log('count: ' + friend));
+	// db.tickets.orderBy('id_ticket');
+	db.tickets.count(friend => add_to_log('count: ' + friend));
+}
+
+
+
+
 
 function post_all_reccords() {
 	if (id_event > 0) {
-		add_to_log('post and get request: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
+		add_to_log('post and get request: ' + domainUrl + 'eticket/tickets/', 'link');
 		db.tickets
 		.toArray(function (array) {
 			// var js_arr = [1,2,3,4];
 			// myRequestResponseFunction('POST', domainUrl + 'eticket/tickets/' + id_event, {abc: 'test2'}, {TOKEN: token}, AfterFetchAllReccords);
-			postData('https://unige.ch/dife/api/v1/eticket/tickets/' + id_event, {tickets_from_client: array})
+			postData(domainUrl + 'eticket/tickets/', {tickets_from_client: array})
 			.catch(error => console.error(error))
-			.then(data => db_synchro(data)); // JSON-string from `response.json()` call
+			.then(data => db_synchro(data)) // JSON-string from `response.json()` call
 		
 		});
 	}
