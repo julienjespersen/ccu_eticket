@@ -6,9 +6,11 @@
     <title>eTicket</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/icons/icon-32x32.png" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles/material.min.css">
     <link rel="stylesheet" href="styles/inline.css">
+
     <script defer src="scripts/material.min.js"></script>
 
     <link rel="manifest" href="manifest.json">  
@@ -46,16 +48,32 @@
 
     </header>
  
+ 
+ 
     <div class="mdl-layout__drawer">
       <span class="mdl-layout-title">settings</span>
+
+
       <nav class="mdl-navigation">
+        <span class="mdl-navigation__link">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inputPrestNum">
+                <label class="mdl-textfield__label" for="sample4">Event number</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
+          <button id="btnPrestNum" class="mdl-button mdl-js-button mdl-button--raised">
+            Update
+          </button>
+        </span>
         <a id="show-user" class="mdl-navigation__link" href="">show user</a>
         <a id="out_00" class="mdl-navigation__link" href="#overview">cam</a>
         <a id="out_01" class="mdl-navigation__link" href="#features">res</a>
       </nav>
     </div>
-
     <main class="mdl-layout__content mdl-color--grey-700">
+
+
+
 
       <section class="mdl-layout__tab-panel" id="user-profile">
         <form action="#">
@@ -66,7 +84,12 @@
         </form>
       </section>
 
+
       <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div id="on-off-txt" class="mdl-grid center-items">
+          <h4><i class="material-icons">warning</i> app is off <i class="material-icons">warning</i></h4>
+          <p>You can still scan tickets for information purpose but no actual action will occur.</p>
+        </div>
         <div class="mdl-grid center-items">
           <video id="preview"class="mdl-cell mdl-cell--10-col"></video>
           <div class="cam-btn-container mdl-cell mdl-cell--1-col">
@@ -79,16 +102,28 @@
           <div class="mdl-snackbar__text"></div>
           <button class="mdl-snackbar__action" type="button">action</button>
         </div>
+
+
+
       </section>
 
       <section class="mdl-layout__tab-panel" id="fixed-tab-2">
         <h5 class="mdl-typography--headline">Attendee</h5>
+        <button id="btnShowTickets" class="mdl-button mdl-js-button mdl-button--raised">
+          <i class="material-icons">local_activity</i> Show tickets
+        </button>
+        <button id="btnClearAtt" class="mdl-button mdl-js-button mdl-button--raised">
+          <i class="material-icons">delete</i> Clear local data
+        </button>
         <ul id="tracer_list" class="mdl-list">
         </ul>
       </section>
 
       <section class="mdl-layout__tab-panel" id="fixed-tab-3">
         <h5 class="mdl-typography--headline">Events</h5>
+      
+
+
         <ul id="events-list" class="mdl-list">
         </ul>
       </section>
@@ -98,7 +133,13 @@
         </ul>
       </section>
 
+      
+
+
     </main>
+
+
+
   </div>    
 
 
@@ -118,7 +159,7 @@
     <h4 class="mdl-dialog__title">Login</h4>
     <div class="mdl-dialog__content">
       <p>
-        Message…
+        Message.
       </p>
       <form method="post" id="login-form" autocomplete="on">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -136,11 +177,16 @@
       </form>
     </div>
   </dialog>
+  
+  
+    
 
   <script src="scripts/instascan.min.js"></script>
   <script src="scripts/dexie.min.js"></script>
+  <!-- <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script> -->
 
   <script src="scripts/dbsync.js"></script>
+  <!-- <script src="scripts/db2.js"></script> -->
   <script src="scripts/app.js"></script>
 
 </body>
