@@ -58,7 +58,12 @@ Instascan.Camera.getCameras().then(function (cameras) {
   scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: mirror  }).addListener('scan', function (content) {
     code = content;
     // console.log(content);
-    count_record(content);
+    if(localStorage.getItem('app_state') > 0) {
+      count_record(content);
+    }
+    else {
+      show_info(content);
+    }
     cam_start(false);
   });
 }).catch(function (e) {
@@ -66,7 +71,7 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 
-add_to_log('app version 0.0.15', 'settings');
+add_to_log('app version 0.0.16', 'settings');
 
 
 function CompareStorage() {
@@ -207,7 +212,10 @@ function createTicket(ticket) {
 
 }
 
-
+function after_show(reccord_obj) {
+  let entry_remains = reccord_obj.count_total - reccord_obj.count_stub;
+    show_dialog(entry_remains + ' remain', reccord_obj.count_stub + ' used<br>' + reccord_obj.count_total + ' total<br>' +  ' ticket num.: ' + reccord_obj.id_ticket);
+}
 
 
 
@@ -383,7 +391,7 @@ function updateUserIcon(status) {
 function AppConnect(YesNo) {
   add_to_log('feed requested: ' + domainUrl + 'eticket/tickets/' + id_event, 'link');
 	// get all events
-  myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
+  // myRequestResponseFunction('GET', domainUrl + 'eticket/events/' + id_user, {hello: 'world'}, {TOKEN: token}, updateEventList);
 	// get all tickets
   // myRequestResponseFunction('GET', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
@@ -523,15 +531,15 @@ function AfterFetchAllReccords(data) {
 }
 
 function SendData() {
+  
 
   post_all_reccords();
-
-  // myRequestResponseFunction('POST', domainUrl + 'eticket/tickets/' + id_event, {hello: 'world'}, {TOKEN: token}, db_synchro);
 
 }
 
 function AppCycle() {
-  if(localStorage.getItem('app_state', 1)) {
+  // if(localStorage.getItem('app_state', 1)) {
+  if(localStorage.app_state == 1) {
     if (id_user) {
       // CompareStorage();
       SendData();
@@ -541,7 +549,7 @@ function AppCycle() {
     else {
       updateUserIcon(false);
     }
-  }
+   }
 }
 
 window.addEventListener('load', AppCycle());

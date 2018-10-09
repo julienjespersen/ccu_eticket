@@ -66,6 +66,13 @@ function db_synchro(data) {
 function count_record(code) {
 	db.tickets.where('code').equals(code).count(after_count);
 }
+function show_info(code) {
+	db.tickets
+	.where('code')
+	.equals(code)
+	.first()
+	.then(after_show);
+}
 
 function fetch_reccord() {
 	db.tickets

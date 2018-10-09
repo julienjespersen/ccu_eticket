@@ -15,7 +15,12 @@
 .mdl-button--icon {
   margin-left: .5em;
 }
-
+.ButtonPower i {
+  transition: color .35s ease-out;
+}
+.show-info {
+  background: rgb(0, 127, 255);
+}
 .mdl-grid.center-items {
   justify-content: center;
 }
